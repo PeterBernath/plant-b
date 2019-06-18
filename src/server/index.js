@@ -1,5 +1,6 @@
 const express = require('express');
 const os = require('os');
+import {items} from '../data/fixtures';
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.get('/api/getUsername', (req, res) => {
 app.use(express.static('dist'));
 app.get('/api/hello', (req, res) => {
   console.log('hello');
+  console.log(items);
   res.send(JSON.stringify({ hello: 'hello' }));
 });
 

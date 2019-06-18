@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './styles.less';
-import plantB from './plantb.png';
-import sandwich from './sandwich.png';
-import sandwich2 from './sandwich2.png';
-import sandwich3 from './sandwich3.png';
+import plantB from '../../public/plantb.png';
+import FoodCategory from '../components/food-category';
+import items from '../data/fixtures';
 
 export default class App extends Component {
   state = {
@@ -15,7 +14,7 @@ export default class App extends Component {
       .then(res => res.json())
       .then((user) => {
         this.setState({ username: user.username });
-        console.log('ggg')
+        console.log('ggg');
       });
   }
 
@@ -33,39 +32,42 @@ export default class App extends Component {
         {this.state.main ? (
           <div className="main">
             <div className="logo">
-              <img src={plantB} width={400} height={400} alt="react" />
+              <img className="logo-img" src={plantB} width={400} height={400} alt="react" />
               <div className="button regular" onClick={() => this.hello()}>Rendelés</div>
               <div className="button regular" onClick={() => this.hello()}>Mi az a Plant B?</div>
             </div>
           </div>) : (
-          <div className="menu">
-            <div className="menu-point">
-              <div className="menu-header">Reggeli Csomagok</div>
-              <div className="menu-items">
-                <div className="item">
-                  <div className="image-container">
-                    <img className="image" src={sandwich} />
-                  </div>
-                  <div className="item-heading">Zöldséges szendvics</div>
-                  <div className="item-desc">teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő</div>
-                  <div className="item-price">1,50 €</div>
-                </div>
-                <div className="item">
-                  <div className="image-container">
-                    <img className="image" src={sandwich2} />
-                  </div>
-                  <div className="item-heading">Paradicsomos szendvics</div>
-                  <div className="item-desc">teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő</div>
-                  <div className="item-price">1,50 €</div>
-                </div>
-                <div className="item">
-                  <div className="image-container">
-                    <img className="image" src={sandwich3} />
-                  </div>
-                </div>
-              </div>
+            <div>
+              <FoodCategory
+                items={items.breakfast}
+                heading="Reggeli Csomagok"
+                colorDark="#f9f9f9"
+                colorLight="#5d967e"
+                gradient="#0C7147"
+              />
+              <FoodCategory
+                items={items.lunch}
+                heading="Ebéd"
+                colorDark="#f9f9f9"
+                colorLight="#ffe5cc"
+                gradient="#eac7a4"
+              />
+              <FoodCategory
+                items={items.dessert}
+                heading="Desszert"
+                colorDark="#f9f9f9"
+                colorLight="#ddafba"
+                gradient="#fff7f9"
+              />
+              <FoodCategory
+                items={items.smoothie}
+                heading="Italok"
+                colorDark="#f9f9f9"
+                colorLight="#cbe09f"
+                gradient="#96C534"
+              />
             </div>
-          </div>)}
+        )}
       </div>
     );
   }
