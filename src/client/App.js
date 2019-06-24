@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import './styles.less';
 import plantB from '../../public/plantb.png';
 import FoodCategory from '../components/food-category';
+import RegisterWindow from '../components/register';
 import items from '../data/fixtures';
 
 export default class App extends Component {
   state = {
     main: true,
+    register: false
   };
 
   componentDidMount() {
@@ -26,9 +28,18 @@ export default class App extends Component {
       .then(response => console.log(response));
   }
 
+  register = () => {
+    const { register } = this.state;
+    this.setState({ register: !register });
+  }
+
   render() {
     return (
       <div>
+        <div className="link" onClick={() => this.register()}>Regisztráció</div>
+        {this.state.register ? (
+          <RegisterWindow />
+        ) : (<div />)}
         {this.state.main ? (
           <div className="main">
             <div className="logo">
