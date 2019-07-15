@@ -5,14 +5,14 @@ const sequelize = new Sequelize('mariadb://root:@localhost:3306/plantb');
 
 const registerUser = (req, res) => {
   const { username, password } = req.body;
-  console.log(req.body);
+  console.log('req.body', req.body);
   sequelize.sync()
     .then(() => User.create({
       username,
       password
     }))
-    .then((jane) => {
-      console.log(jane.toJSON());
+    .then((user) => {
+      console.log(user.toJSON());
     });
 
   res.json({ success: true });

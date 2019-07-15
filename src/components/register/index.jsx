@@ -1,6 +1,10 @@
 import React from 'react';
+const bcrypt = require('bcryptjs');
 import PropTypes from 'prop-types';
 import './style.less';
+
+
+const saltRounds = 10;
 
 
 class RegisterWindow extends React.Component {
@@ -12,12 +16,23 @@ class RegisterWindow extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
-    const username = data.get('username');
-    console.log(username);
+    let password = data.get('password');
+
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+      bcrypt.hash(password, salt, (hashErr, hash) => {
+        return hash;
+      });
+    });
+
+    password = bcrypt.genSalt();
+
+    const userData = { username: data.get('username'), password };
+    console.log(userData);
 
     fetch('/api/register', {
       method: 'POST',
-      body: data,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
     });
   }
 
@@ -28,8 +43,8 @@ class RegisterWindow extends React.Component {
           <label htmlFor="username">Felhasználónév</label>
           <input id="username" name="username" type="text" />
 
-          <label htmlFor="email">Jelszó</label>
-          <input id="email" name="email" type="password" />
+          <label htmlFor="password">Jelszó</label>
+          <input id="password" name="password" type="password" />
 
           <button>Send data!</button>
         </form>
