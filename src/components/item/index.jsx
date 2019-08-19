@@ -12,7 +12,9 @@ class Item extends React.Component {
       image,
       heading,
       desc,
-      price
+      price,
+      active,
+      addToCartFunc
     } = this.props;
     return (
       <div className="item">
@@ -22,6 +24,11 @@ class Item extends React.Component {
         <div className="item-heading">{heading}</div>
         <div className="item-desc">{desc}</div>
         <div className="item-price">{price}</div>
+        {active ? (
+          <button onClick={() => addToCartFunc(heading)} value={heading} className="add-to-cart">Kosarba</button>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
@@ -32,6 +39,8 @@ Item.propTypes = {
   heading: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
+  addToCartFunc: PropTypes.func.isRequired,
 };
 
 export default Item;

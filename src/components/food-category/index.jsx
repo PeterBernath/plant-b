@@ -15,6 +15,8 @@ class FoodCategory extends React.Component {
       colorDark,
       colorLight,
       gradient,
+      active,
+      addToCartFunc
     } = this.props;
     const divStyle = {
       border: `solid 2px ${colorLight}`,
@@ -30,6 +32,8 @@ class FoodCategory extends React.Component {
               heading={item.heading}
               desc={item.desc}
               price={item.price}
+              active={active}
+              addToCartFunc={addToCartFunc}
             />))}
           </div>
         </div>
@@ -44,6 +48,8 @@ FoodCategory.propTypes = {
   colorDark: PropTypes.string.isRequired,
   colorLight: PropTypes.string.isRequired,
   gradient: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
+  addToCartFunc: PropTypes.func.isRequired,
 };
 
 export default FoodCategory;
