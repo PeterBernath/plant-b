@@ -15,6 +15,7 @@ export default class App extends Component {
     login: false,
     loggedIn: false,
     cart: [],
+    registerModalVisible: false,
   };
 
   componentDidMount() {
@@ -34,8 +35,8 @@ export default class App extends Component {
   }
 
   register = () => {
-    const { register } = this.state;
-    this.setState({ register: !register });
+    const { registerModalVisible } = this.state;
+    this.setState({ registerModalVisible: !registerModalVisible });
   }
 
   login = () => {
@@ -100,11 +101,11 @@ export default class App extends Component {
               <span>{this.state.cart.length}</span>
             </div>
           </div>)}
-        {this.state.register ? (
-          <RegisterWindow
-            handlerFunc={this.handleRegistration}
-          />
-        ) : (<div />)}
+        <RegisterWindow
+          handlerFunc={this.handleRegistration}
+          modalVisible={this.state.registerModalVisible}
+          closeFunc={this.register}
+        />
         {this.state.login ? (
           <LoginWindow
             handlerFunc={this.handleLogin}
