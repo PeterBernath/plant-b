@@ -11,15 +11,17 @@ class RegisterWindow extends React.Component {
 
         <div className="modal-content">
           <span className="close" onClick={this.props.closeFunc}>&times;</span>
-          <form onSubmit={this.props.handlerFunc}>
-            <label htmlFor="username">Felhasználónév</label>
-            <input id="username" name="username" type="text" />
-
-            <label htmlFor="password">Jelszó</label>
-            <input id="password" name="password" type="password" />
-
-            <button>Send data!</button>
-          </form>
+          <div className="register-form">
+            <form onSubmit={this.props.handlerFunc}>
+              <div>
+                <input className="input-style" id="username" name="username" type="text" placeholder="Felhasználónév"/>
+              </div>
+              <div>
+                <input className="input-style" id="password" name="password" type="password" placeholder="Jelszó"/>
+              </div>
+              <button className="register-button">Küldés</button>
+            </form>
+          </div>
         </div>
       </div>
     );
