@@ -19,7 +19,7 @@ class FoodCategory extends React.Component {
       addToCartFunc
     } = this.props;
     const divStyle = {
-      border: `solid 2px ${colorLight}`,
+      // border: `solid 2px ${colorLight}`,
       color: colorLight,
     };
     return (

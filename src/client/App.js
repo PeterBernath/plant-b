@@ -4,6 +4,7 @@ import plantB from '../../public/plantb.png';
 import FoodCategory from '../components/food-category';
 import RegisterWindow from '../components/register';
 import LoginWindow from '../components/login';
+import CartWindow from '../components/cart';
 import items from '../data/fixtures';
 
 const bcrypt = require('bcryptjs');
@@ -15,6 +16,7 @@ export default class App extends Component {
     cart: [],
     registerModalVisible: false,
     loginModalVisible: false,
+    cartModalVisible: false,
   };
 
   componentDidMount() {
@@ -31,22 +33,27 @@ export default class App extends Component {
     fetch('/api/hello')
       .then(res => res.json())
       .then(response => console.log(response));
-  }
+  };
 
   register = () => {
     const { registerModalVisible } = this.state;
     this.setState({ registerModalVisible: !registerModalVisible });
-  }
+  };
+
+  showCart = () => {
+    const { cartModalVisible } = this.state;
+    this.setState({ cartModalVisible: !cartModalVisible });
+  };
 
   login = () => {
     const { loginModalVisible } = this.state;
     this.setState({ loginModalVisible: !loginModalVisible });
-  }
+  };
 
   logout = () => {
     sessionStorage.removeItem('jwtToken');
     this.setState({ loggedIn: false });
-  }
+  };
 
   handleRegistration = (event) => {
     event.preventDefault();
@@ -63,7 +70,7 @@ export default class App extends Component {
     });
     const { registerModalVisible } = this.state;
     this.setState({ registerModalVisible: !registerModalVisible });
-  }
+  };
 
   handleLogin = (event) => {
     event.preventDefault();
@@ -81,12 +88,12 @@ export default class App extends Component {
       });
     const { loginModalVisible } = this.state;
     this.setState({ loginModalVisible: !loginModalVisible });
-  }
+  };
 
   addToCart = async (item) => {
     await this.setState({ cart: [...this.state.cart, item] });
     console.log(this.state.cart);
-  }
+  };
 
   render() {
     return (
@@ -99,7 +106,7 @@ export default class App extends Component {
           <div>
             <div className="register" onClick={() => this.logout()}>Kijelentkezés</div>
             <div className="login">
-              <img src="public/basket.png" alt="cart" height="32" width="32" />
+              <a onClick={() => this.showCart()}><img src="public/basket.png" alt="cart" height="32" width="32" /></a>
               <span>{this.state.cart.length}</span>
             </div>
           </div>)}
@@ -113,6 +120,11 @@ export default class App extends Component {
           modalVisible={this.state.loginModalVisible}
           closeFunc={this.login}
         />
+        <CartWindow
+          cart={this.state.cart}
+          modalVisible={this.state.cartModalVisible}
+          closeFunc={this.showCart}
+        />
         {this.state.main ? (
           <div className="main">
             <div className="logo">
@@ -125,8 +137,8 @@ export default class App extends Component {
               <FoodCategory
                 items={items.breakfast}
                 heading="Reggeli Csomagok"
-                colorDark="#f9f9f9"
-                colorLight="#5d967e"
+                colorDark="#a8ffb5"
+                colorLight="#bee034"
                 gradient="#0C7147"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
@@ -153,7 +165,7 @@ export default class App extends Component {
                 items={items.smoothie}
                 heading="Italok"
                 colorDark="#f9f9f9"
-                colorLight="#cbe09f"
+                colorLight="#9e9c9c"
                 gradient="#96C534"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
