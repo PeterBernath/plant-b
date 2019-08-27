@@ -3,26 +3,36 @@ import PropTypes from 'prop-types';
 import './style.less';
 
 class LoginWindow extends React.Component {
-
   render() {
+    const modalVisible = { display: 'block' };
+    const modalHidden = { display: 'none' };
     return (
-      <div className="login-window">
-        <form onSubmit={this.props.handlerFunc}>
-          <label htmlFor="username">Felhasználónév</label>
-          <input id="username" name="username" type="text" />
+      <div id="myModal" className="modal" style={this.props.modalVisible ? modalVisible : modalHidden}>
 
-          <label htmlFor="password">Jelszó</label>
-          <input id="password" name="password" type="password" />
-
-          <button>Log in</button>
-        </form>
+        <div className="modal-content">
+          <span className="register-header">Bejelentkezés</span>
+          <span className="close" onClick={this.props.closeFunc}>&times;</span>
+          <div className="register-form">
+            <form onSubmit={this.props.handlerFunc}>
+              <div>
+                <input className="input-style" id="username" name="username" type="text" placeholder="Felhasználónév"/>
+              </div>
+              <div>
+                <input className="input-style" id="password" name="password" type="password" placeholder="Jelszó"/>
+              </div>
+              <button className="register-button">Küldés</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 LoginWindow.propTypes = {
-  handlerFunc: PropTypes.func.isRequired
+  handlerFunc: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+  closeFunc: PropTypes.func.isRequired,
 };
 
 export default LoginWindow;

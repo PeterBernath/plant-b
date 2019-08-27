@@ -11,11 +11,10 @@ const bcrypt = require('bcryptjs');
 export default class App extends Component {
   state = {
     main: true,
-    register: false,
-    login: false,
     loggedIn: false,
     cart: [],
     registerModalVisible: false,
+    loginModalVisible: false,
   };
 
   componentDidMount() {
@@ -40,8 +39,8 @@ export default class App extends Component {
   }
 
   login = () => {
-    const { login } = this.state;
-    this.setState({ login: !login });
+    const { loginModalVisible } = this.state;
+    this.setState({ loginModalVisible: !loginModalVisible });
   }
 
   logout = () => {
@@ -62,7 +61,8 @@ export default class App extends Component {
         body: JSON.stringify(userData),
       });
     });
-    this.setState({ register: false });
+    const { registerModalVisible } = this.state;
+    this.setState({ registerModalVisible: !registerModalVisible });
   }
 
   handleLogin = (event) => {
@@ -79,6 +79,8 @@ export default class App extends Component {
         sessionStorage.setItem('jwtToken', res.token);
         this.setState({ login: false, loggedIn: true });
       });
+    const { loginModalVisible } = this.state;
+    this.setState({ loginModalVisible: !loginModalVisible });
   }
 
   addToCart = async (item) => {
@@ -92,10 +94,10 @@ export default class App extends Component {
         {!this.state.loggedIn ? (
           <div>
             <div className="register" onClick={() => this.register()}>Regisztráció</div>
-            <div className="login" onClick={() => this.login()}>Bejelentkezes</div>
+            <div className="login" onClick={() => this.login()}>Bejelentkezés</div>
           </div>) : (
           <div>
-            <div className="register" onClick={() => this.logout()}>Kijelentkezes</div>
+            <div className="register" onClick={() => this.logout()}>Kijelentkezés</div>
             <div className="login">
               <img src="public/basket.png" alt="cart" height="32" width="32" />
               <span>{this.state.cart.length}</span>
@@ -106,11 +108,11 @@ export default class App extends Component {
           modalVisible={this.state.registerModalVisible}
           closeFunc={this.register}
         />
-        {this.state.login ? (
-          <LoginWindow
-            handlerFunc={this.handleLogin}
-          />
-        ) : (<div />)}
+        <LoginWindow
+          handlerFunc={this.handleLogin}
+          modalVisible={this.state.loginModalVisible}
+          closeFunc={this.login}
+        />
         {this.state.main ? (
           <div className="main">
             <div className="logo">
