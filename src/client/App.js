@@ -13,7 +13,7 @@ export default class App extends Component {
   state = {
     main: true,
     loggedIn: false,
-    cart: [],
+    cart: {},
     registerModalVisible: false,
     loginModalVisible: false,
     cartModalVisible: false,
@@ -91,7 +91,10 @@ export default class App extends Component {
   };
 
   addToCart = async (item) => {
-    await this.setState({ cart: [...this.state.cart, item] });
+    const cart = this.state.cart;
+    if (cart[item] === undefined) cart[item] = 1;
+    else cart[item] += 1;
+    await this.setState({ cart });
     console.log(this.state.cart);
   };
 
