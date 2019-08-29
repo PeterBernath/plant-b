@@ -7,6 +7,10 @@ const sequelize = new Sequelize('mariadb://root:@localhost:3306/plantb');
 const jwtSecret = 'LKhsfdkashflkgksaufghjhsadfk';
 
 const registerUser = (req, res) => {
+  const used = process.memoryUsage();
+  for (const key in used) {
+    console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+  }
   const { username, password } = req.body;
   console.log('req.body', req.body);
   sequelize.sync()
@@ -22,6 +26,10 @@ const registerUser = (req, res) => {
 };
 
 const login = (req, res) => {
+  const used = process.memoryUsage();
+  for (const key in used) {
+    console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+  }
   const { username, password } = req.body;
   User.findOne({ where: { username } }).then((result) => {
     return { dbUsername: result.dataValues.username, dbPassword: result.dataValues.password };
