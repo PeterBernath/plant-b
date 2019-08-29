@@ -13,7 +13,7 @@ export default class App extends Component {
   state = {
     main: true,
     loggedIn: false,
-    cart: {},
+    cart: JSON.parse(sessionStorage.getItem('cart')) || {},
     registerModalVisible: false,
     loginModalVisible: false,
     cartModalVisible: false,
@@ -41,6 +41,7 @@ export default class App extends Component {
   };
 
   showCart = () => {
+    console.log(this.state.cart);
     const { cartModalVisible } = this.state;
     this.setState({ cartModalVisible: !cartModalVisible });
   };
@@ -90,13 +91,26 @@ export default class App extends Component {
     this.setState({ loginModalVisible: !loginModalVisible });
   };
 
-  addToCart = async (item) => {
+  addToCart = async (item, price) => {
     const cart = this.state.cart;
-    if (cart[item] === undefined) cart[item] = 1;
-    else cart[item] += 1;
+    if (cart[item] === undefined) cart[item] = { amount: 1, price };
+    else cart[item] = { amount: cart[item].amount + 1, price };
     await this.setState({ cart });
     console.log(this.state.cart);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
   };
+
+  noOfItemsInCart = (cart) => {
+    console.log(cart);
+    console.log(Object.values(cart));
+    let noOfItems = 0;
+    Object.values(cart).forEach((item) => {
+      console.log(item.amount);
+      noOfItems += item.amount;
+    });
+    console.log(noOfItems);
+    return noOfItems;
+  }
 
   render() {
     return (
@@ -110,7 +124,7 @@ export default class App extends Component {
             <div className="register" onClick={() => this.logout()}>Kijelentkezés</div>
             <div className="login">
               <a onClick={() => this.showCart()}><img src="public/basket.png" alt="cart" height="32" width="32" /></a>
-              <span>{this.state.cart.length}</span>
+              <span>{this.noOfItemsInCart(this.state.cart)}</span>
             </div>
           </div>)}
         <RegisterWindow

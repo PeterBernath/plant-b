@@ -10,14 +10,23 @@ class CartWindow extends React.Component {
       <div id="myModal" className="modal" style={this.props.modalVisible ? modalVisible : modalHidden}>
 
         <div className="modal-content">
-          <span className="register-header">Kosár tartalma</span>
+          <div className="register-header">Kosár tartalma</div>
           <span className="close" onClick={this.props.closeFunc}>&times;</span>
           <div className="cart-items">
-            <ul>
-            {this.props.cart.map(item => (
-              <li>{item}</li>
+            <table>
+              <tr>
+                <th>Termék</th>
+                <th>Mennyiség</th>
+                <th>Ár</th>
+              </tr>
+            {Object.entries(this.props.cart).map(([key, value]) => (
+                <tr>
+                  <td>{key}</td>
+                  <td>{value.amount}</td>
+                  <td>{value.price}</td>
+                </tr>
             ))}
-            </ul>
+            </table>
           </div>
         </div>
       </div>
@@ -26,7 +35,7 @@ class CartWindow extends React.Component {
 }
 
 CartWindow.propTypes = {
-  cart: PropTypes.arrayOf(PropTypes.string).isRequired,
+  cart: PropTypes.objectOf().isRequired,
   modalVisible: PropTypes.bool.isRequired,
   closeFunc: PropTypes.func.isRequired,
 };

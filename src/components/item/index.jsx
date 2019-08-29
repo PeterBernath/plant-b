@@ -26,7 +26,7 @@ class Item extends React.Component {
         <div className="item-price">
             {price}
             {active ? (
-              <button onClick={() => addToCartFunc(heading)} value={heading} className="add-to-cart">Kosárba</button>
+              <button onClick={() => addToCartFunc(heading, price)} value={heading} className="add-to-cart">Kosárba</button>
             ) : (
               <div />
             )}
