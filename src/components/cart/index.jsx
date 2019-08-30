@@ -9,7 +9,7 @@ class CartWindow extends React.Component {
     return (
       <div id="myModal" className="modal" style={this.props.modalVisible ? modalVisible : modalHidden}>
 
-        <div className="modal-content">
+        <div className="cart-modal-content">
           <div className="register-header">Kosár tartalma</div>
           <span className="close" onClick={this.props.closeFunc}>&times;</span>
           <div className="cart-items">
