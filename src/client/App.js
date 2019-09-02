@@ -110,7 +110,18 @@ export default class App extends Component {
     });
     console.log(noOfItems);
     return noOfItems;
-  }
+  };
+
+  calculateTotal = (cart) => {
+    let total = 0;
+    Object.values(cart).forEach((item) => {
+      console.log(item.amount);
+      console.log(item.price);
+      total += item.amount * item.price;
+    });
+    console.log(total);
+    return total;
+  };
 
   render() {
     return (
@@ -141,6 +152,7 @@ export default class App extends Component {
           cart={this.state.cart}
           modalVisible={this.state.cartModalVisible}
           closeFunc={this.showCart}
+          cartTotal={this.calculateTotal(this.state.cart)}
         />
         {this.state.main ? (
           <div className="main">

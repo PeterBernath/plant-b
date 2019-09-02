@@ -10,7 +10,7 @@ class LoginWindow extends React.Component {
       <div id="myModal" className="modal" style={this.props.modalVisible ? modalVisible : modalHidden}>
 
         <div className="modal-content">
-          <span className="register-header">Bejelentkezés</span>
+          <span className="login-header">Bejelentkezés</span>
           <span className="close" onClick={this.props.closeFunc}>&times;</span>
           <div className="register-form">
             <form onSubmit={this.props.handlerFunc}>

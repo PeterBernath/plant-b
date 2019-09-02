@@ -1,37 +1,5 @@
 @import (css) url('https://fonts.googleapis.com/css?family=Baloo|Poiret+One|Raleway|Asap|Permanent+Marker|Stylish|Mandali|Comfortaa&display=swap');
 
-
-.login-window {
-  position: absolute;
-  left: 20px;
-  top: 70px;
-}
-
-label{
-  float: left;
-  clear: left;
-  width: 120px;
-  text-align: left;
-}
-input {
-  display: inline-block;
-  float: left;
-}
-
-.cart-items {
-  width: 100%;
-  margin-top: 30px;
-  margin-left: 10px;
-}
-
-tr {
-  height: 40px;
-}
-
-td {
-  width: 30%;
-}
-
 .cart-modal-content {
   margin: 5% auto;
   width: 80%;
@@ -43,4 +11,64 @@ td {
   box-shadow: 7px 6px 8px -2px rgba(33,33,33,1);
   border-top: solid 3px #fffafa;
   border-bottom: solid 3px #eef3f5;
+  display: block;
+  // display: flex;
+}
+
+.cart-modal-header {
+  display: block;
+  height: 40px;
+
+  .cart-heading {
+    float: left;
+    font-family: 'Comfortaa';
+    font-size: 20px;
+    margin: 20px 0 0 20px;
+    color: #758aa1;
+  }
+
+}
+
+.cart-body {
+  margin-top: 40px;
+  display: block;
+  width: 100%;
+
+  .cart-table {
+    width: 100%;
+    border-spacing: 0;
+  }
+  
+  .table-cell tr, td, th {
+    height: 30px;
+    padding: 20px;
+    font-family: 'Comfortaa';
+    font-weight: 100;
+  }
+
+  th {
+    background-color: #758aa1;
+    color: #fff;
+  }
+
+  .right {
+    text-align: right;
+  }
+
+  .left {
+    text-align: left;
+  }
+
+  .total-table {
+    margin: auto;
+    width: 80%;
+    border-spacing: 0;
+    position: absolute;
+    bottom: 15%;
+    left: 10%;
+
+    tr, td, th {
+      background-color: #9fbcdb;
+    }
+  }
 }
