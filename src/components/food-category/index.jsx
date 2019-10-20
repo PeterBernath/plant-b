@@ -16,7 +16,8 @@ class FoodCategory extends React.Component {
       colorLight,
       gradient,
       active,
-      addToCartFunc
+      addToCartFunc,
+      categoryId
     } = this.props;
     const divStyle = {
       // border: `solid 2px ${colorLight}`,
@@ -27,13 +28,15 @@ class FoodCategory extends React.Component {
         <div className="menu-point">
           <div className="menu-header" style={divStyle}>{heading}</div>
           <div className="menu-items">
-            {items.map(item => (<Item
+            {items.map((item, index) => (<Item
               image={item.image}
               heading={item.heading}
               desc={item.desc}
               price={item.price}
               active={active}
               addToCartFunc={addToCartFunc}
+              categoryId={categoryId}
+              itemId={index}
             />))}
           </div>
         </div>

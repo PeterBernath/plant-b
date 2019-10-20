@@ -171,6 +171,7 @@ export default class App extends Component {
                 gradient="#0C7147"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                categoryId={1}
               />
               <FoodCategory
                 items={items.lunch}
@@ -180,6 +181,7 @@ export default class App extends Component {
                 gradient="#eac7a4"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                categoryId={2}
               />
               <FoodCategory
                 items={items.dessert}
@@ -189,6 +191,7 @@ export default class App extends Component {
                 gradient="#fff7f9"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                categoryId={3}
               />
               <FoodCategory
                 items={items.smoothie}
@@ -198,6 +201,7 @@ export default class App extends Component {
                 gradient="#96C534"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                categoryId={4}
               />
             </div>
         )}

@@ -7,6 +7,17 @@ class Item extends React.Component {
   componentDidMount() {
   }
 
+  addExtras = (event, heading, price) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    console.log(data.get('extra1'));
+    console.log(data.get('extra2'));
+    console.log(data.get('extra3'));
+    console.log(data.get('extra4'));
+    console.log(heading);
+    console.log(price);
+  };
+
   render() {
     const {
       image,
@@ -14,21 +25,23 @@ class Item extends React.Component {
       desc,
       price,
       active,
-      addToCartFunc
+      addToCartFunc,
+      itemId,
+      categoryId
     } = this.props;
     return (
       <div className="item">
         <div className="container">
-          <form className="form cf">
+          <form className="form cf" onSubmit={(e) => this.addExtras(e, heading, price)}>
             <section className="plan cf">
-              <input type="checkbox" name="radio1" id="free" value="uborka"/><label class="extra1" for="free">Uborka</label>
-              <input type="checkbox" name="radio1" id="basic" value="paradicsom" checked/><label class="extra1" for="basic">Paradicsom</label>
-              <input type="checkbox" name="radio1" id="premium" value="salata"/><label class="extra1" for="premium">Saláta</label>
+              <input type="checkbox" name="extra1" id={`extra_1_${categoryId}_${itemId}`} value="uborka"/><label className="extra1" htmlFor={`extra_1_${categoryId}_${itemId}`}>Uborka</label>
+              <input type="checkbox" name="extra2" id={`extra_2_${categoryId}_${itemId}`} value="paradicsom"/><label className="extra1" htmlFor={`extra_2_${categoryId}_${itemId}`}>Paradicsom</label>
+              <input type="checkbox" name="extra3" id={`extra_3_${categoryId}_${itemId}`} value="salata"/><label className="extra1" htmlFor={`extra_3_${categoryId}_${itemId}`}>Saláta</label>
             </section>
             <section className="plan cf">
-              <input type="checkbox" name="radio1" id="basic" value="csipos" checked/><label class="extra2" for="basic">Csípős</label>
+              <input type="checkbox" name="extra4" id={`extra_4_${categoryId}_${itemId}`} value="csipos"/><label className="extra2" htmlFor={`extra_4_${categoryId}_${itemId}`}>Csípős</label>
             </section>
-            <input className="submit" type="submit" value="Submit"/>
+            <input className="submit_button" type="submit" value="Elküld"/>
           </form>
         </div>
         <div className="image-container">

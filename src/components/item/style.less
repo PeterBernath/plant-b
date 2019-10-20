@@ -93,8 +93,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: black;
-  opacity: 0.8;
+  background: rgba(0,0,0,0.8);
 }
 //.four { width: 32.26%; max-width: 32.26%;}
 
@@ -137,7 +136,7 @@
 
 .form label{
   font-family: 'Comfortaa';
-  color: #fff;
+  color: rgb(177, 177, 177);
   font-size: 14px;
   text-align: center;
   width: 80%;
@@ -146,6 +145,7 @@
   margin: auto;
   float: none;
   border-radius: 3px;
+  border: 2px solid rgba(255, 126, 119, 0);
 }
 
 .extra1 {
@@ -160,27 +160,26 @@
 
 .form .plan input:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
   border: 2px solid rgba(255, 126, 119, 0.61);
+  color: white;
 }
 
-.form .plan input:before + label, .form .payment-plan input:before + label, .form .payment-type input:before + label{
-  border: 2px solid rgba(100, 126, 200, 0.61);
+.submit_button {
+ font-family: 'Comfortaa';
+ border-radius: 3px;
+ border: 2px solid rgba(255, 126, 119, 0.61);
+ padding: 15px;
+ width: 81%;
+ display: table;
+ margin: auto;
+ color: rgba(255, 126, 119, 0.61);
+ font-size: 14px;
+ float: none;
+ background: rgba(0,0,0,0);
 }
 
-.submit{
- padding: 15px 60px;
- display: inline-block;
- border: none;
- margin: 20px 0;
- background-color: #2fcc71;
- color: #fff;
- border: 2px solid #333;
- font-size: 18px;
- -webkit-transition: transform 0.3s ease-in-out;
- -o-transition: transform 0.3s ease-in-out;
- transition: transform 0.3s ease-in-out;
-}
-
-.submit:hover{
+.submit_button:hover{
  cursor: pointer;
- transform: rotateX(360deg);
+ background: rgba(255, 126, 119, 0.61);
+ color: #ffffff;
+ font-weight: 600;
 }
