@@ -21,9 +21,12 @@ class Item extends React.Component {
         <div className="container">
           <form className="form cf">
             <section className="plan cf">
-              <input type="checkbox" name="radio1" id="free" value="free"/><label for="free">Free</label>
-              <input type="checkbox" name="radio1" id="basic" value="basic" checked/><label for="basic">Basic</label>
-              <input type="checkbox" name="radio1" id="premium" value="premium"/><label for="premium">Premium</label>
+              <input type="checkbox" name="radio1" id="free" value="uborka"/><label class="extra1" for="free">Uborka</label>
+              <input type="checkbox" name="radio1" id="basic" value="paradicsom" checked/><label class="extra1" for="basic">Paradicsom</label>
+              <input type="checkbox" name="radio1" id="premium" value="salata"/><label class="extra1" for="premium">Saláta</label>
+            </section>
+            <section className="plan cf">
+              <input type="checkbox" name="radio1" id="basic" value="csipos" checked/><label class="extra2" for="basic">Csípős</label>
             </section>
             <input className="submit" type="submit" value="Submit"/>
           </form>
