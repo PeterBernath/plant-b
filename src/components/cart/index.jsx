@@ -16,25 +16,31 @@ class CartWindow extends React.Component {
           </div>
           <div className="cart-body">
             <table className="cart-table">
-              <tr>
+              <thead>
                 <th className="table-cell left">Termék</th>
-                <th className="table-cell left">Feltétek</th>
+                <th className="table-cell right">Feltétek</th>
                 <th className="table-cell right">Mennyiség</th>
                 <th className="table-cell right">Ár</th>
-              </tr>
-            {Object.entries(this.props.cart).map(([key, value]) => (
-                <tr>
-                  <td className="table-cell left">{key}</td>
-                  {undefined === value.extras ? (
-                    <td className="table-cell left">-</td>
-                  ) : (
-                    <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
-                  )}
-                  <td className="table-cell right">{value.amount}</td>
-                  <td className="table-cell right">{value.price} €</td>
-                </tr>
-            ))}
+              </thead>
             </table>
+            <div className="cart_table_container">
+              <table className="cart-table">
+                <tbody>
+                  {Object.entries(this.props.cart).map(([key, value]) => (
+                    <tr>
+                      <td className="table-cell left">{key}</td>
+                      {undefined === value.extras ? (
+                        <td className="table-cell left">-</td>
+                      ) : (
+                        <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
+                      )}
+                      <td className="table-cell right">{value.amount}</td>
+                      <td className="table-cell right">{value.price} €</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <table className="total-table">
             <tr>
                   <td className="table-cell left">Végösszeg</td>
