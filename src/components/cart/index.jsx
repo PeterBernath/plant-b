@@ -18,22 +18,28 @@ class CartWindow extends React.Component {
             <table className="cart-table">
               <tr>
                 <th className="table-cell left">Termék</th>
+                <th className="table-cell left">Feltétek</th>
                 <th className="table-cell right">Mennyiség</th>
                 <th className="table-cell right">Ár</th>
               </tr>
             {Object.entries(this.props.cart).map(([key, value]) => (
                 <tr>
                   <td className="table-cell left">{key}</td>
-                  <td  className="table-cell right">{value.amount}</td>
-                  <td  className="table-cell right">{value.price} €</td>
+                  {undefined === value.extras ? (
+                    <td className="table-cell left">-</td>
+                  ) : (
+                    <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
+                  )}
+                  <td className="table-cell right">{value.amount}</td>
+                  <td className="table-cell right">{value.price} €</td>
                 </tr>
             ))}
             </table>
             <table className="total-table">
             <tr>
                   <td className="table-cell left">Végösszeg</td>
-                  <td  className="table-cell right"></td>
-                  <td  className="table-cell right">{this.props.cartTotal} €</td>
+                  <td className="table-cell right"></td>
+                  <td className="table-cell right">{this.props.cartTotal} €</td>
                 </tr>
             </table>
           </div>

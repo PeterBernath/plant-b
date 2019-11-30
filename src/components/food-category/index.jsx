@@ -17,6 +17,7 @@ class FoodCategory extends React.Component {
       gradient,
       active,
       addToCartFunc,
+      addToCartWithExtrasFunc,
       categoryId
     } = this.props;
     const divStyle = {
@@ -35,8 +36,10 @@ class FoodCategory extends React.Component {
               price={item.price}
               active={active}
               addToCartFunc={addToCartFunc}
+              addToCartWithExtrasFunc={addToCartWithExtrasFunc}
               categoryId={categoryId}
               itemId={index}
+              extras={item.extras}
             />))}
           </div>
         </div>

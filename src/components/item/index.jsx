@@ -4,6 +4,10 @@ import './style.less';
 
 
 class Item extends React.Component {
+  state = {
+    visible: false,
+  }
+
   componentDidMount() {
   }
 
@@ -18,6 +22,12 @@ class Item extends React.Component {
     console.log(price);
   };
 
+  changeVisibility = () => {
+    const { visible } = this.state;
+    console.log(visible);
+    this.setState({ visible: !visible });
+  };
+
   render() {
     const {
       image,
@@ -26,24 +36,43 @@ class Item extends React.Component {
       price,
       active,
       addToCartFunc,
+      addToCartWithExtrasFunc,
       itemId,
-      categoryId
+      categoryId,
+      extras,
     } = this.props;
     return (
       <div className="item">
+        {undefined === extras ? (<div></div>) : 
+        !this.state.visible ? (<div></div>) : (
         <div className="container">
-          <form className="form cf" onSubmit={(e) => this.addExtras(e, heading, price)}>
+          <form className="form cf" onSubmit={(e) => addToCartWithExtrasFunc(heading, price, extras, e)}>
             <section className="plan cf">
-              <input type="checkbox" name="extra1" id={`extra_1_${categoryId}_${itemId}`} value="uborka"/><label className="extra1" htmlFor={`extra_1_${categoryId}_${itemId}`}>Uborka</label>
-              <input type="checkbox" name="extra2" id={`extra_2_${categoryId}_${itemId}`} value="paradicsom"/><label className="extra1" htmlFor={`extra_2_${categoryId}_${itemId}`}>Paradicsom</label>
-              <input type="checkbox" name="extra3" id={`extra_3_${categoryId}_${itemId}`} value="salata"/><label className="extra1" htmlFor={`extra_3_${categoryId}_${itemId}`}>Saláta</label>
+              <input type="checkbox" name={extras[0]} id={`extra_1_${categoryId}_${itemId}`} value={extras[0]}/><label className="extra1" htmlFor={`extra_1_${categoryId}_${itemId}`}>{extras[0]}</label>
+              {1 < extras.length ? (
+                <div>
+                  <input type="checkbox" name={extras[1]} id={`extra_2_${categoryId}_${itemId}`} value={extras[1]}/>
+                  <label className="extra1" htmlFor={`extra_2_${categoryId}_${itemId}`}>{extras[1]}</label>
+                </div>) : (<div></div>)
+              }
+              {2 < extras.length ? (
+                <div>
+                  <input type="checkbox" name={extras[2]} id={`extra_3_${categoryId}_${itemId}`} value={extras[2]}/>
+                  <label className="extra1" htmlFor={`extra_3_${categoryId}_${itemId}`}>{extras[2]}</label>
+                </div>) : (<div></div>)
+              }
             </section>
             <section className="plan cf">
-              <input type="checkbox" name="extra4" id={`extra_4_${categoryId}_${itemId}`} value="csipos"/><label className="extra2" htmlFor={`extra_4_${categoryId}_${itemId}`}>Csípős</label>
+            {3 < extras.length ? (
+              <div>
+                <input type="checkbox" name={extras[3]} id={`extra_4_${categoryId}_${itemId}`} value={extras[3]}/>
+                <label className="extra2" htmlFor={`extra_4_${categoryId}_${itemId}`}>{extras[3]}</label>
+              </div>) : (<div></div>)
+            }
             </section>
-            <input className="submit_button" type="submit" value="Elküld"/>
+            <input className="submit_button" type="submit" value="Kosárba"/>
           </form>
-        </div>
+        </div>)}
         <div className="image-container">
           <img className="image" src={image} alt="item" />
         </div>
@@ -51,10 +80,12 @@ class Item extends React.Component {
         <div className="item-desc">{desc}</div>
         <div className="item-price">
             {price} €
-            {active ? (
+            {!active ? (
+              <div />
+            ) : undefined === extras ? (
               <button onClick={() => addToCartFunc(heading, price)} value={heading} className="add-to-cart">Kosárba</button>
             ) : (
-              <div />
+              <button onClick={() => this.changeVisibility()} value={heading} className="add-to-cart">Feltétek</button>
             )}
         </div>
       </div>

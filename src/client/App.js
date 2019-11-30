@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import './styles.less';
 import plantB from '../../public/plantb.png';
 import FoodCategory from '../components/food-category';
@@ -91,6 +92,29 @@ export default class App extends Component {
     this.setState({ loginModalVisible: !loginModalVisible });
   };
 
+  addToCartWithExtras = async (item, price, extras_keys, event) => {
+    let extras = []
+    event.preventDefault();
+    const cart = this.state.cart;
+    if (undefined !== _.get(cart, `${item}.extras`)) {
+      extras = _.get(cart, `${item}.extras`)
+    }
+    console.log(extras);
+    let item_extras = []
+    const data = new FormData(event.target);
+    for (let extra of extras_keys) {
+      if (null !== data.get(extra)) {
+        item_extras.push(data.get(extra));
+      }
+    }
+    extras.push(item_extras)
+    if (cart[item] === undefined) cart[item] = { amount: 1, price, extras };
+    else cart[item] = { amount: cart[item].amount + 1, price, extras };
+    await this.setState({ cart });
+    console.log(this.state.cart);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  };
+
   addToCart = async (item, price) => {
     const cart = this.state.cart;
     if (cart[item] === undefined) cart[item] = { amount: 1, price };
@@ -171,6 +195,7 @@ export default class App extends Component {
                 gradient="#0C7147"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={1}
               />
               <FoodCategory
@@ -181,6 +206,7 @@ export default class App extends Component {
                 gradient="#eac7a4"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={2}
               />
               <FoodCategory
@@ -191,6 +217,7 @@ export default class App extends Component {
                 gradient="#fff7f9"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={3}
               />
               <FoodCategory
@@ -201,6 +228,7 @@ export default class App extends Component {
                 gradient="#96C534"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
+                addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={4}
               />
             </div>

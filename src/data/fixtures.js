@@ -19,18 +19,21 @@ const items = {
       heading: 'Zöldséges szendvics',
       desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
       price: 1.5,
+      extras: ['Retek']
     },
     {
       image: sandwich2,
       heading: 'Paradicsomos szendvics',
       desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
       price: 1.6,
+      extras: ['Uborka', 'Paradicsom']
     },
     {
       image: sandwich3,
       heading: 'Kesus szendvics',
       desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
       price: 1.7,
+      extras: ['Uborka', 'Paradicsom', 'Saláta', 'Csípős']
     },
   ],
   lunch: [
