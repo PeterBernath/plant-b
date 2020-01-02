@@ -1,14 +1,25 @@
-import React, { Component } from 'react';
 import _ from 'lodash';
+import React, { Component } from 'react';
 import './styles.less';
-import plantB from '../../public/plantb.png';
+import PersonPin from '@material-ui/icons/PersonPin';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import logo from '../../public/logo_new.png';
+import introBackground from '../../public/intro_background.png';
 import FoodCategory from '../components/food-category';
 import RegisterWindow from '../components/register';
 import LoginWindow from '../components/login';
 import CartWindow from '../components/cart';
 import items from '../data/fixtures';
-
+import { styled } from '@material-ui/styles';
 const bcrypt = require('bcryptjs');
+
+const MyPerson = styled(PersonPin)({
+  color: 'black',
+});
+
+const MyShoppingCart = styled(ShoppingCart)({
+  color: 'black',
+});
 
 export default class App extends Component {
   state = {
@@ -152,8 +163,13 @@ export default class App extends Component {
       <div>
         {!this.state.loggedIn ? (
           <div>
-            <div className="register" onClick={() => this.register()}>Regisztráció</div>
-            <div className="login" onClick={() => this.login()}>Bejelentkezés</div>
+            {/*<div className="register" onClick={() => this.register()}>Regisztráció</div>*/}
+            <div className="login" onClick={() => this.login()}>
+              <span className="login_icon"><MyPerson /></span>Sign in
+            </div>
+            <div className="cart_container" onClick={() => this.login()}>
+              <span className="cart_icon"><MyShoppingCart /></span>Cart
+            </div>
           </div>) : (
           <div>
             <div className="register" onClick={() => this.logout()}>Kijelentkezés</div>
@@ -181,9 +197,20 @@ export default class App extends Component {
         {this.state.main ? (
           <div className="main">
             <div className="logo">
-              <img className="logo-img" src={plantB} width={400} height={400} alt="react" />
-              <div className="button regular" onClick={() => this.hello()}>Rendelés</div>
-              <div className="button regular" onClick={() => this.hello()}>Mi az a Plant B?</div>
+              <img className="logo_img" src={logo} width={80} height={100} alt="logo" />
+              {/*<div className="button regular" onClick={() => this.hello()}>Rendelés</div>*/}
+              {/*<div className="button regular" onClick={() => this.hello()}>Mi az a Plant B?</div>*/}
+            </div>
+            <div className="navbar">
+              <ul className="navbar_list">
+                <li className="navbar_item">Reggelik</li>
+                <li className="navbar_item">Ebédek</li>
+                <li className="navbar_item">Desszertek</li>
+                <li className="navbar_item">Üdítők</li>
+              </ul>
+            </div>
+            <div className="intro_background_container">
+              <img className="intro_background" src={introBackground} alt="intro_background" />
             </div>
           </div>) : (
             <div>

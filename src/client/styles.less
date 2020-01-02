@@ -1,4 +1,4 @@
-@import (css) url('https://fonts.googleapis.com/css?family=Baloo|Poiret+One|Raleway|Asap|Permanent+Marker|Stylish|Mandali|Comfortaa&display=swap');
+@import (css) url('https://fonts.googleapis.com/css?family=Baloo|Poiret+One|Raleway|Asap|Permanent+Marker|Stylish|Mandali|Comfortaa|Libre+Franklin&display=swap');
 
 
 @screen-se:     320px;
@@ -22,11 +22,47 @@ img {
   height:auto;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .logo {
   @media (min-width: @screen-xs) {
     margin: auto;
-    width: 400px;
+    width: 80px;
   }
+}
+
+li {
+  display: inline;
+}
+
+.navbar {
+  width: 28%;
+  font-family: 'Libre Franklin';
+  font-weight: 800;
+  margin: 10px auto;
+  font-size: 14px;
+}
+
+.navbar_item {
+    margin: 20px;
+}
+
+.intro_background_container {
+  position: absolute;
+  width: 100%;
+  height: 82%;
+}
+
+.intro_background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  //-webkit-box-shadow: 10px 10px 12px -11px rgba(0,0,0,0.75);
+  //-moz-box-shadow: 10px 10px 12px -11px rgba(0,0,0,0.75);
+  //box-shadow: 10px 10px 12px -11px rgba(0,0,0,0.75);
 }
 
 .button {
@@ -132,11 +168,36 @@ img {
 
 .login {
   cursor: pointer;
-  font-family: 'Baloo';
-  color: #a8a8a8;
   position: absolute;
   top: 20px;
-  left: 20px;
+  right: 210px;
+  font-family: 'Libre Franklin';
+  font-weight: 800;
+  font-size: 12px;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.cart_container {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 100px;
+  font-family: 'Libre Franklin';
+  font-weight: 800;
+  font-size: 12px;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.login_icon {
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+.cart_icon {
+  margin-top: -4px;
+  margin-right: 4px;
 }
 
 .modal {
