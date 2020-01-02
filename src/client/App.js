@@ -29,6 +29,7 @@ export default class App extends Component {
     registerModalVisible: false,
     loginModalVisible: false,
     cartModalVisible: false,
+    view: "main"
   };
 
   componentDidMount() {
@@ -59,8 +60,7 @@ export default class App extends Component {
   };
 
   login = () => {
-    const { loginModalVisible } = this.state;
-    this.setState({ loginModalVisible: !loginModalVisible });
+    this.setState({ view: "login" });
   };
 
   logout = () => {
@@ -165,10 +165,10 @@ export default class App extends Component {
           <div>
             {/*<div className="register" onClick={() => this.register()}>Regisztráció</div>*/}
             <div className="login" onClick={() => this.login()}>
-              <span className="login_icon"><MyPerson /></span>Sign in
+              <span className="login_icon"><MyPerson /></span>Belépés
             </div>
             <div className="cart_container" onClick={() => this.login()}>
-              <span className="cart_icon"><MyShoppingCart /></span>Cart
+              <span className="cart_icon"><MyShoppingCart /></span>Kosár
             </div>
           </div>) : (
           <div>
@@ -194,25 +194,43 @@ export default class App extends Component {
           closeFunc={this.showCart}
           cartTotal={this.calculateTotal(this.state.cart)}
         />
-        {this.state.main ? (
+        <div className="logo">
+          <img className="logo_img" src={logo} width={80} height={100} alt="logo" />
+          {/*<div className="button regular" onClick={() => this.hello()}>Rendelés</div>*/}
+          {/*<div className="button regular" onClick={() => this.hello()}>Mi az a Plant B?</div>*/}
+        </div>
+        <div className="navbar">
+          <ul className="navbar_list">
+            <li className="navbar_item">Reggelik</li>
+            <li className="navbar_item">Ebédek</li>
+            <li className="navbar_item">Desszertek</li>
+            <li className="navbar_item">Üdítők</li>
+          </ul>
+        </div>
+        {"main" === this.state.view ? (
           <div className="main">
-            <div className="logo">
-              <img className="logo_img" src={logo} width={80} height={100} alt="logo" />
-              {/*<div className="button regular" onClick={() => this.hello()}>Rendelés</div>*/}
-              {/*<div className="button regular" onClick={() => this.hello()}>Mi az a Plant B?</div>*/}
-            </div>
-            <div className="navbar">
-              <ul className="navbar_list">
-                <li className="navbar_item">Reggelik</li>
-                <li className="navbar_item">Ebédek</li>
-                <li className="navbar_item">Desszertek</li>
-                <li className="navbar_item">Üdítők</li>
-              </ul>
-            </div>
             <div className="intro_background_container">
               <img className="intro_background" src={introBackground} alt="intro_background" />
             </div>
-          </div>) : (
+          </div>) : (<div></div>)}
+        {"login" === this.state.view ? (
+          <div>
+            <div className="delimiter"></div>
+            <div className="login_header">Belépés</div>
+            <div className="register-form">
+            <form onSubmit={this.handleLogin}>
+              <div>
+                <input className="input-style" id="username" name="username" type="text" placeholder="Felhasználónév"/>
+              </div>
+              <div>
+                <input className="input-style" id="password" name="password" type="password" placeholder="Jelszó"/>
+              </div>
+              <button className="register-button">Küldés</button>
+            </form>
+          </div>
+          </div>
+          ) : (<div></div>)}
+        {"foods" === this.state.view ? (
             <div>
               <FoodCategory
                 items={items.breakfast}
@@ -259,7 +277,7 @@ export default class App extends Component {
                 categoryId={4}
               />
             </div>
-        )}
+        ) : (<div></div>)}
       </div>
     );
   }
