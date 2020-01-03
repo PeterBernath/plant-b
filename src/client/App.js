@@ -227,6 +227,7 @@ export default class App extends Component {
               </div>
               <button className="login_button">Belépés</button>
             </form>
+            <a className="register_link">Új felhasználó létrehozása</a>
           </div>
           </div>
           ) : (<div></div>)}
