@@ -225,7 +225,7 @@ export default class App extends Component {
               <div>
                 <input className="input-style" id="password" name="password" type="password" placeholder="Jelszó"/>
               </div>
-              <button className="register-button">Küldés</button>
+              <button className="login_button">Belépés</button>
             </form>
           </div>
           </div>
