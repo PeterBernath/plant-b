@@ -5,6 +5,8 @@ class User extends Sequelize.Model {}
 
 const initUser = () => {
   User.init({
+    first_name: Sequelize.STRING,
+    last_name: Sequelize.STRING,
     username: Sequelize.STRING,
     password: Sequelize.STRING
   }, { sequelize, modelName: 'user' });

@@ -29,7 +29,7 @@ export default class App extends Component {
     registerModalVisible: false,
     loginModalVisible: false,
     cartModalVisible: false,
-    view: "main"
+    view: 'main'
   };
 
   componentDidMount() {
@@ -49,8 +49,7 @@ export default class App extends Component {
   };
 
   register = () => {
-    const { registerModalVisible } = this.state;
-    this.setState({ registerModalVisible: !registerModalVisible });
+    this.setState({ view: "register" });
   };
 
   showCart = () => {
@@ -73,7 +72,12 @@ export default class App extends Component {
     const data = new FormData(event.target);
     const password = data.get('password');
     bcrypt.hash(password, 10, (err, hash) => {
-      const userData = { username: data.get('username'), password: hash };
+      const userData = {
+        first_name: data.get('first_name'),
+        last_name: data.get('last_name'),
+        username: data.get('username'),
+        password: hash
+      };
       console.log(userData);
       fetch('/api/register', {
         method: 'POST',
@@ -97,7 +101,7 @@ export default class App extends Component {
       .then((res) => {
         console.log(res);
         sessionStorage.setItem('jwtToken', res.token);
-        this.setState({ login: false, loggedIn: true });
+        this.setState({ view: 'main', loggedIn: true });
       });
     const { loginModalVisible } = this.state;
     this.setState({ loginModalVisible: !loginModalVisible });
@@ -163,7 +167,6 @@ export default class App extends Component {
       <div>
         {!this.state.loggedIn ? (
           <div>
-            {/*<div className="register" onClick={() => this.register()}>Regisztráció</div>*/}
             <div className="login" onClick={() => this.login()}>
               <span className="login_icon"><MyPerson /></span>Belépés
             </div>
@@ -217,7 +220,7 @@ export default class App extends Component {
           <div>
             <div className="delimiter"></div>
             <div className="login_header">Belépés</div>
-            <div className="register-form">
+            <div className="login_form">
             <form onSubmit={this.handleLogin}>
               <div>
                 <input className="input-style" id="username" name="username" type="text" placeholder="Felhasználónév"/>
@@ -227,10 +230,31 @@ export default class App extends Component {
               </div>
               <button className="login_button">Belépés</button>
             </form>
-            <a className="register_link">Új felhasználó létrehozása</a>
+            <a className="register_link" onClick={this.register}>Új felhasználó létrehozása</a>
           </div>
-          </div>
-          ) : (<div></div>)}
+          </div>) : (<div></div>)}
+        {"register" === this.state.view ? (
+          <div>
+            <div className="delimiter"></div>
+            <div className="login_header">Regisztráció</div>
+            <div className="register_form">
+              <form onSubmit={this.handleLogin}>
+                <div>
+                  <input className="reg_input_style" id="first_name" name="first_name" type="text" placeholder="Keresztnév"/>
+                </div>
+                <div>
+                  <input className="reg_input_style" id="last_name" name="last_name" type="text" placeholder="Vezetéknév"/>
+                </div>
+                <div>
+                  <input className="reg_input_style" id="username" name="username" type="text" placeholder="Felhasználónév"/>
+                </div>
+                <div>
+                  <input className="reg_input_style" id="password" name="password" type="password" placeholder="Jelszó"/>
+                </div>
+                <button className="login_button">Belépés</button>
+              </form>
+            </div>
+          </div>) : (<div></div>)}
         {"foods" === this.state.view ? (
             <div>
               <FoodCategory
