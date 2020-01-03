@@ -236,7 +236,7 @@ export default class App extends Component {
         {"register" === this.state.view ? (
           <div>
             <div className="delimiter"></div>
-            <div className="login_header">Regisztráció</div>
+            <div className="register_header">Regisztráció</div>
             <div className="register_form">
               <form onSubmit={this.handleLogin}>
                 <div>
@@ -251,7 +251,7 @@ export default class App extends Component {
                 <div>
                   <input className="reg_input_style" id="password" name="password" type="password" placeholder="Jelszó"/>
                 </div>
-                <button className="login_button">Belépés</button>
+                <button className="register_button">Belépés</button>
               </form>
             </div>
           </div>) : (<div></div>)}
