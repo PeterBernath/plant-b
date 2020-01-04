@@ -11,6 +11,7 @@ import LoginWindow from '../components/login';
 import CartWindow from '../components/cart';
 import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
+import Swal from 'sweetalert2'
 const bcrypt = require('bcryptjs');
 
 const MyPerson = styled(PersonPin)({
@@ -78,15 +79,14 @@ export default class App extends Component {
         username: data.get('username'),
         password: hash
       };
-      console.log(userData);
       fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
     });
-    const { registerModalVisible } = this.state;
-    this.setState({ registerModalVisible: !registerModalVisible });
+    Swal.fire({text: 'Sikeres regisztráció', icon:'success'})
+    this.setState({ view: 'main' });
   };
 
   handleLogin = (event) => {
@@ -238,7 +238,7 @@ export default class App extends Component {
             <div className="delimiter"></div>
             <div className="register_header">Regisztráció</div>
             <div className="register_form">
-              <form onSubmit={this.handleLogin}>
+              <form onSubmit={this.handleRegistration}>
                 <div>
                   <input className="reg_input_style" id="first_name" name="first_name" type="text" placeholder="Keresztnév"/>
                 </div>
@@ -251,7 +251,7 @@ export default class App extends Component {
                 <div>
                   <input className="reg_input_style" id="password" name="password" type="password" placeholder="Jelszó"/>
                 </div>
-                <button className="register_button">Belépés</button>
+                <button className="register_button">Adatok küldése</button>
               </form>
             </div>
           </div>) : (<div></div>)}

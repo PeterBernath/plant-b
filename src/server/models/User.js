@@ -5,9 +5,9 @@ class User extends Sequelize.Model {}
 
 const initUser = () => {
   User.init({
+    username: { type: Sequelize.STRING, allowNull: false, unique: true },
     first_name: Sequelize.STRING,
     last_name: Sequelize.STRING,
-    username: Sequelize.STRING,
     password: Sequelize.STRING
   }, { sequelize, modelName: 'user' });
   sequelize.sync()
