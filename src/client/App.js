@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import './styles.less';
 import PersonPin from '@material-ui/icons/PersonPin';
+import Input from '@material-ui/icons/Input';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import logo from '../../public/logo_new.png';
 import introBackground from '../../public/intro_background.png';
@@ -19,6 +20,10 @@ const MyPerson = styled(PersonPin)({
 });
 
 const MyShoppingCart = styled(ShoppingCart)({
+  color: 'black',
+});
+
+const MyInput = styled(Input)({
   color: 'black',
 });
 
@@ -83,10 +88,17 @@ export default class App extends Component {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
-      });
+      })
+      .then((res) => res.json())
+      .then((json) => {
+        if (true === json.success) {
+          Swal.fire({text: 'Sikeres regisztráció', icon:'success'})
+          this.setState({ view: 'main' });
+        } else {
+          Swal.fire({text: 'Ez a felhasználónév már foglalt', icon:'error'})
+        }
+      })
     });
-    Swal.fire({text: 'Sikeres regisztráció', icon:'success'})
-    this.setState({ view: 'main' });
   };
 
   handleLogin = (event) => {
@@ -99,12 +111,14 @@ export default class App extends Component {
     })
       .then(res => res.json())
       .then((res) => {
-        console.log(res);
-        sessionStorage.setItem('jwtToken', res.token);
-        this.setState({ view: 'main', loggedIn: true });
+        if (true === res.success) {
+          console.log(res);
+          sessionStorage.setItem('jwtToken', res.token);
+          this.setState({ view: 'main', loggedIn: true });
+        } else {
+          Swal.fire({text: 'Helytelen felhasználónév vagy jelszó', icon:'error'})
+        }
       });
-    const { loginModalVisible } = this.state;
-    this.setState({ loginModalVisible: !loginModalVisible });
   };
 
   addToCartWithExtras = async (item, price, extras_keys, event) => {
@@ -170,15 +184,17 @@ export default class App extends Component {
             <div className="login" onClick={() => this.login()}>
               <span className="login_icon"><MyPerson /></span>Belépés
             </div>
-            <div className="cart_container" onClick={() => this.login()}>
+            <div className="cart_container">
               <span className="cart_icon"><MyShoppingCart /></span>Kosár
             </div>
           </div>) : (
           <div>
-            <div className="register" onClick={() => this.logout()}>Kijelentkezés</div>
-            <div className="login">
-              <a onClick={() => this.showCart()}><img src="public/basket.png" alt="cart" height="32" width="32" /></a>
-              <span>{this.noOfItemsInCart(this.state.cart)}</span>
+            <div className="login" onClick={() => this.logout()}>
+              <span className="login_icon"><MyInput /></span>Kijelentkezés
+            </div>
+            <span className="cart_no_of_itmes">{this.noOfItemsInCart(this.state.cart)}</span>
+            <div className="cart_container" onClick={() => this.showCart()}>
+              <span className="cart_icon"><MyShoppingCart /></span>Kosár
             </div>
           </div>)}
         <RegisterWindow

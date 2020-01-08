@@ -18,9 +18,11 @@ const registerUser = (req, res) => {
     }))
     .then((user) => {
       console.log(user.toJSON());
-    });
-
-  res.json({ success: true });
+      res.json({ success: true });
+    })
+    .catch(() => {
+      res.json({ success: false });
+    }) 
 };
 
 const login = (req, res) => {
@@ -50,17 +52,12 @@ const login = (req, res) => {
               token
             });
           }
-        //   else {
-        //     res.send(403).json({
-        //       success: false,
-        //       message: 'Incorrect username or password'
-        //     });
-        //   }
-        // } else {
-        //   res.send(400).json({
-        //     success: false,
-        //     message: 'Authentication failed! Please check the request'
-        //   });
+          else {
+            res.json({
+              success: false,
+              message: 'Incorrect username or password'
+            });
+          }
         }
       });
     });
