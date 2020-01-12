@@ -5,6 +5,7 @@ import PersonPin from '@material-ui/icons/PersonPin';
 import Input from '@material-ui/icons/Input';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import logo from '../../public/logo_new.png';
+import lunch_header from '../../public/lunch_header.png';
 import introBackground from '../../public/intro_background.png';
 import FoodCategory from '../components/food-category';
 import RegisterWindow from '../components/register';
@@ -176,6 +177,10 @@ export default class App extends Component {
     return total;
   };
 
+  changeView = (view) => {
+    this.setState({view});
+  }
+
   render() {
     return (
       <div>
@@ -221,7 +226,7 @@ export default class App extends Component {
         <div className="navbar">
           <ul className="navbar_list">
             <li className="navbar_item">Reggelik</li>
-            <li className="navbar_item">Ebédek</li>
+            <li className="navbar_item" onClick={() => this.changeView('lunch')}>Ebédek</li>
             <li className="navbar_item">Desszertek</li>
             <li className="navbar_item">Üdítők</li>
           </ul>
@@ -269,6 +274,13 @@ export default class App extends Component {
                 </div>
                 <button className="register_button">Adatok küldése</button>
               </form>
+            </div>
+          </div>) : (<div></div>)}
+          {"lunch" === this.state.view ? (
+          <div>
+            <div className="lunch_header_container">
+              <img className="lunch_header_img" src={lunch_header} />
+              <p className="lunch_header_text">Ebéd</p>
             </div>
           </div>) : (<div></div>)}
         {"foods" === this.state.view ? (
