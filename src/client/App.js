@@ -279,8 +279,12 @@ export default class App extends Component {
           {"lunch" === this.state.view ? (
           <div>
             <div className="lunch_header_container">
-              <img className="lunch_header_img" src={lunch_header} />
-              <p className="lunch_header_text">Ebéd</p>
+              <p className="lunch_header_header">Ebéd</p>
+              <div className="lunch_header_text_container">
+                <p className="lunch_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                tempor incididunt ut labore et dolore magna aliqua. </p>
+              </div>
+              <img className="lunch_header_img" src={lunch_header} width={14} height={14} alt="logo" />
             </div>
           </div>) : (<div></div>)}
         {"foods" === this.state.view ? (
