@@ -6,6 +6,9 @@ import Input from '@material-ui/icons/Input';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import logo from '../../public/logo_new.png';
 import lunch_header from '../../public/lunch_header.png';
+import taco from '../../public/taco.png';
+import cake from '../../public/cake.png';
+import smoothie from '../../public/smoothie.png';
 import introBackground from '../../public/intro_background.png';
 import FoodCategory from '../components/food-category';
 import RegisterWindow from '../components/register';
@@ -219,16 +222,16 @@ export default class App extends Component {
           cartTotal={this.calculateTotal(this.state.cart)}
         />
         <div className="logo">
-          <img className="logo_img" src={logo} width={80} height={100} alt="logo" />
+          <img className="logo_img" onClick={() => this.changeView('main')} src={logo} width={80} height={100} alt="logo" />
           {/*<div className="button regular" onClick={() => this.hello()}>Rendelés</div>*/}
           {/*<div className="button regular" onClick={() => this.hello()}>Mi az a Plant B?</div>*/}
         </div>
         <div className="navbar">
           <ul className="navbar_list">
-            <li className="navbar_item">Reggelik</li>
+            <li className="navbar_item" onClick={() => this.changeView('breakfast')}>Reggelik</li>
             <li className="navbar_item" onClick={() => this.changeView('lunch')}>Ebédek</li>
-            <li className="navbar_item">Desszertek</li>
-            <li className="navbar_item">Üdítők</li>
+            <li className="navbar_item" onClick={() => this.changeView('cakes')}>Desszertek</li>
+            <li className="navbar_item" onClick={() => this.changeView('drinks')}>Üdítők</li>
           </ul>
         </div>
         {"main" === this.state.view ? (
@@ -276,20 +279,19 @@ export default class App extends Component {
               </form>
             </div>
           </div>) : (<div></div>)}
-          {"lunch" === this.state.view ? (
+          {"breakfast" === this.state.view ? (
           <div>
-            <div className="lunch_header_container">
-              <p className="lunch_header_header">Ebéd</p>
-              <div className="lunch_header_text_container">
-                <p className="lunch_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+            <div className="breakfast_header_container">
+              <p className="breakfast_header_header">Reggelik</p>
+              <div className="breakfast_header_text_container">
+                <p className="breakfast_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
                 tempor incididunt ut labore et dolore magna aliqua. </p>
               </div>
-              <img className="lunch_header_img" src={lunch_header} width={14} height={14} alt="logo" />
+              <div className="breakfast_header_img_container" >
+                <img className="breakfast_header_img" src={lunch_header} width={64} height={64} />
+              </div>
             </div>
-          </div>) : (<div></div>)}
-        {"foods" === this.state.view ? (
-            <div>
-              <FoodCategory
+            <FoodCategory
                 items={items.breakfast}
                 heading="Reggeli Csomagok"
                 colorDark="#a8ffb5"
@@ -300,7 +302,20 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={1}
               />
-              <FoodCategory
+          </div>) : (<div></div>)}
+          {"lunch" === this.state.view ? (
+          <div>
+            <div className="lunch_header_container">
+              <p className="lunch_header_header">Ebédek</p>
+              <div className="lunch_header_text_container">
+                <p className="lunch_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                tempor incididunt ut labore et dolore magna aliqua. </p>
+              </div>
+              <div className="lunch_header_img_container" >
+                <img className="lunch_header_img" src={taco} width={64} height={64} />
+              </div>
+            </div>
+            <FoodCategory
                 items={items.lunch}
                 heading="Ebéd"
                 colorDark="#f9f9f9"
@@ -311,7 +326,20 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={2}
               />
-              <FoodCategory
+          </div>) : (<div></div>)}
+          {"cakes" === this.state.view ? (
+          <div>
+            <div className="cakes_header_container">
+              <p className="cakes_header_header">Desszertek</p>
+              <div className="cakes_header_text_container">
+                <p className="cakes_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                tempor incididunt ut labore et dolore magna aliqua. </p>
+              </div>
+              <div className="cakes_header_img_container" >
+                <img className="cakes_header_img" src={cake} width={64} height={64} />
+              </div>
+            </div>
+            <FoodCategory
                 items={items.dessert}
                 heading="Desszert"
                 colorDark="#f9f9f9"
@@ -322,7 +350,20 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={3}
               />
-              <FoodCategory
+          </div>) : (<div></div>)}
+          {"drinks" === this.state.view ? (
+          <div>
+            <div className="drinks_header_container">
+              <p className="drinks_header_header">Üdítők</p>
+              <div className="drinks_header_text_container">
+                <p className="drinks_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                tempor incididunt ut labore et dolore magna aliqua. </p>
+              </div>
+              <div className="drinks_header_img_container" >
+                <img className="drinks_header_img" src={smoothie} width={64} height={64} />
+              </div>
+            </div>
+            <FoodCategory
                 items={items.smoothie}
                 heading="Italok"
                 colorDark="#f9f9f9"
@@ -333,8 +374,7 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={4}
               />
-            </div>
-        ) : (<div></div>)}
+          </div>) : (<div></div>)}
       </div>
     );
   }
