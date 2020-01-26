@@ -282,21 +282,17 @@ export default class App extends Component {
           {"breakfast" === this.state.view ? (
           <div>
             <div className="breakfast_header_container">
-              <p className="breakfast_header_header">Reggelik</p>
               <div className="breakfast_header_text_container">
-                <p className="breakfast_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                tempor incididunt ut labore et dolore magna aliqua. </p>
+                <div className="breakfast_header_header">Reggelik</div>
+                <div className="breakfast_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                tempor incididunt ut labore et dolore magna aliqua. </div>
               </div>
               <div className="breakfast_header_img_container" >
-                <img className="breakfast_header_img" src={lunch_header} width={64} height={64} />
+                  <img className="breakfast_header_img" src={lunch_header} width={300} height={300} />
               </div>
             </div>
             <FoodCategory
                 items={items.breakfast}
-                heading="Reggeli Csomagok"
-                colorDark="#a8ffb5"
-                colorLight="#bee034"
-                gradient="#0C7147"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
@@ -306,16 +302,16 @@ export default class App extends Component {
           {"lunch" === this.state.view ? (
           <div>
             <div className="lunch_header_container">
-              <p className="lunch_header_header">Ebédek</p>
+              <div className="lunch_header_header">Ebédek</div>
               <div className="lunch_header_text_container">
-                <p className="lunch_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                tempor incididunt ut labore et dolore magna aliqua. </p>
+                <div className="lunch_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                tempor incididunt ut labore et dolore magna aliqua. </div>
               </div>
               <div className="lunch_header_img_container" >
                 <img className="lunch_header_img" src={taco} width={64} height={64} />
               </div>
             </div>
-            <FoodCategory
+            {/* <FoodCategory
                 items={items.lunch}
                 heading="Ebéd"
                 colorDark="#f9f9f9"
@@ -325,7 +321,7 @@ export default class App extends Component {
                 addToCartFunc={this.addToCart}
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={2}
-              />
+              /> */}
           </div>) : (<div></div>)}
           {"cakes" === this.state.view ? (
           <div>

@@ -11,23 +11,14 @@ class FoodCategory extends React.Component {
   render() {
     const {
       items,
-      heading,
-      colorDark,
-      colorLight,
-      gradient,
       active,
       addToCartFunc,
       addToCartWithExtrasFunc,
       categoryId
     } = this.props;
-    const divStyle = {
-      // border: `solid 2px ${colorLight}`,
-      color: colorLight,
-    };
     return (
       <div className="menu">
         <div className="menu-point">
-          <div className="menu-header" style={divStyle}>{heading}</div>
           <div className="menu-items">
             {items.map((item, index) => (<Item
               image={item.image}

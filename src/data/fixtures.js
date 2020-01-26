@@ -35,6 +35,13 @@ const items = {
       price: 1.7,
       extras: ['Uborka', 'Paradicsom', 'Saláta', 'Csípős']
     },
+    {
+      image: sandwich,
+      heading: 'Zöldséges szendvics',
+      desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
+      price: 1.5,
+      extras: ['Retek']
+    }
   ],
   lunch: [
     {
