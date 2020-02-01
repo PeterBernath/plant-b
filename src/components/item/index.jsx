@@ -24,9 +24,13 @@ class Item extends React.Component {
 
   changeVisibility = () => {
     const { visible } = this.state;
-    console.log(visible);
     this.setState({ visible: !visible });
   };
+
+  addToCartLocal = (heading, price, extras, e) => {
+    this.props.addToCartWithExtrasFunc(heading, price, extras, e);
+    this.changeVisibility();
+  }
 
   render() {
     const {
@@ -43,10 +47,15 @@ class Item extends React.Component {
     } = this.props;
     return (
       <div className="item">
-        {undefined === extras ? (<div></div>) : 
-        !this.state.visible ? (<div></div>) : (
-        <div className="container">
-          <form className="form cf" onSubmit={(e) => addToCartWithExtrasFunc(heading, price, extras, e)}>
+        {undefined === extras ? (<span></span>) : 
+        !this.state.visible ? 
+        (
+        <div className="image_container">
+          <img className="image" src={image} alt="item" />
+        </div>
+        ) : (
+        <div className="extras_container">
+          <form className="form cf" onSubmit={(e) => this.addToCartLocal(heading, price, extras, e)}>
             <section className="plan cf">
               <input type="checkbox" name={extras[0]} id={`extra_1_${categoryId}_${itemId}`} value={extras[0]}/><label className="extra1" htmlFor={`extra_1_${categoryId}_${itemId}`}>{extras[0]}</label>
               {1 < extras.length ? (
@@ -72,18 +81,16 @@ class Item extends React.Component {
             </section>
             <input className="submit_button" type="submit" value="Kosárba"/>
           </form>
-        </div>)}
-        <div className="image-container">
-          <img className="image" src={image} alt="item" />
         </div>
+        )}
         <div className="item-heading">{heading}</div>
-        <div className="item-desc">{desc}</div>
+        {/* <div className="item-desc">{desc}</div> */}
         <div className="item-price">
-            {price} €
+            {price.toFixed(2)} €
             {!active ? (
               <div />
             ) : undefined === extras ? (
-              <button onClick={() => addToCartFunc(heading, price)} value={heading} className="add-to-cart">Kosárba</button>
+              <button onClick={() => this.addToCartFunc(heading, price)} value={heading} className="add-to-cart">Kosárba</button>
             ) : (
               <button onClick={() => this.changeVisibility()} value={heading} className="add-to-cart">Feltétek</button>
             )}
