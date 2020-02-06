@@ -436,40 +436,55 @@ li {
 }
 
 .breakfast_header_header {
-  font-size:calc(20px + 0.5vw);
+  @media (max-width: 500px) {
+    margin: 9vw 0 0 4vw;
+  }
+  font-size:calc(24px + 0.5vw);
   font-weight: 800;
   color: #9c9186;
   font-family: 'Comfortaa';
+  min-width: 150px;
   margin-bottom: 10px;
-  margin-left: 20px;
 }
 
 
 .breakfast_header_text {
-  font-size: calc(7px + 0.5vw);
-  margin-left: 20px;
+  @media (max-width: 500px) {
+    visibility: hidden;
+  }
+  font-size: calc(7px + 0.3vw);
   font-weight: 100;
   color: #9c9186;
   font-family: 'Comfortaa';
 }
 
 .breakfast_header_text_container {
-  float: right;
   overflow-wrap: break-word;
-  width: 50px;
+  width: 20vw;
   white-space: normal;
-  width: 300px;
   height: 100px;
   line-height: 1.5;
-  padding-right: 13vw;
+  margin-right: 13vw;
   padding-top: 8.5vw;
 }
 
 .breakfast_header_img_container {
+  @media (max-width: 375px) {
+    margin-right: 6vw;
+  }
   float: right;
-  min-width: 150px;
-  padding-top: 3vw;
-  padding-right: 21vw;
+  width: calc(80px + 11vw);
+  padding-top: calc(10px + 4vw);
+  padding-right: 2vw;
+}
+
+.breakfast_header_inner_container {
+  @media (max-width: 375px) {
+    margin: 0;
+  }
+  width: 60vw;
+  min-width: 360px;
+  margin: 0 auto;
 }
 
 .cakes_header_container {
@@ -513,7 +528,6 @@ li {
   overflow-wrap: break-word;
   width: 50px;
   white-space: normal;
-  // border: black 1px solid;
   width: 300px;
   height: 100px;
   line-height: 1.5;
