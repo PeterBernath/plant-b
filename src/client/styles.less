@@ -28,10 +28,8 @@ img {
 }
 
 .logo {
-  @media (min-width: @screen-xs) {
-    margin: auto;
-    width: 80px;
-  }
+  margin: auto;
+  width: 80px;
 }
 
 .logo_img {
@@ -43,7 +41,12 @@ li {
 }
 
 .navbar {
-  width: 28%;
+  @media (max-width: 400px) {
+    width: 100vw;
+    margin: 15px auto;
+    font-size: 12px;
+  }
+  width: 400px;
   font-family: 'Libre Franklin';
   font-weight: 800;
   margin: 15px auto;
@@ -51,6 +54,9 @@ li {
 }
 
 .navbar_item {
+  @media (max-width: 400px) {
+    margin: 5vw;
+  }
   margin: 20px;
   cursor: pointer;
 }
@@ -197,10 +203,15 @@ li {
 }
 
 .login {
+  @media (max-width: 800px) {
+    right: 2vw;
+    font-size: 5px;
+    margin-right: 15px;
+  }
   cursor: pointer;
   position: absolute;
   top: 20px;
-  right: 210px;
+  right: 15vw;
   font-family: 'Libre Franklin';
   font-weight: 800;
   font-size: 12px;
@@ -209,10 +220,14 @@ li {
 }
 
 .cart_container {
+  @media (max-width: 800px) {
+    right:0vw;
+    font-size: 5px;
+  }
   cursor: pointer;
   position: absolute;
   top: 20px;
-  right: 100px;
+  right: 7vw;
   font-family: 'Libre Franklin';
   font-weight: 800;
   font-size: 12px;
@@ -221,19 +236,25 @@ li {
 }
 
 .cart_no_of_itmes {
-  position: absolute;
-  top: 5px;
-  right: 146px;
+  //position: absolute;
+  //top: 5px;
+  //right: 10.15vw;
   font-family: 'Libre Franklin';
   font-weight: 800;
   font-size: 12px;
-  display: inline-flex;
-  vertical-align: middle;
+  //display: inline-flex;
+  //vertical-align: middle;
 }
 
 .login_icon {
   margin-top: -4px;
   margin-right: 4px;
+}
+
+.icon_text {
+  @media (max-width: 800px) {
+    color: white;
+  }
 }
 
 .cart_icon {

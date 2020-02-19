@@ -190,19 +190,19 @@ export default class App extends Component {
         {!this.state.loggedIn ? (
           <div>
             <div className="login" onClick={() => this.login()}>
-              <span className="login_icon"><MyPerson /></span>Belépés
+              <span className="login_icon"><MyPerson /></span><span className="icon_text">Bejelentkezés</span>
             </div>
             <div className="cart_container">
-              <span className="cart_icon"><MyShoppingCart /></span>Kosár
+              <span className="cart_icon"><MyShoppingCart /></span><span className="icon_text">Kosár</span>
             </div>
           </div>) : (
           <div>
             <div className="login" onClick={() => this.logout()}>
-              <span className="login_icon"><MyInput /></span>Kijelentkezés
+              <span className="login_icon"><MyInput /></span><span className="icon_text">Kijelentkezés</span>
             </div>
-            <span className="cart_no_of_itmes">{this.noOfItemsInCart(this.state.cart)}</span>
             <div className="cart_container" onClick={() => this.showCart()}>
-              <span className="cart_icon"><MyShoppingCart /></span>Kosár
+              {/*<span className="cart_no_of_itmes">{this.noOfItemsInCart(this.state.cart)}</span>*/}
+              <span className="cart_icon"><MyShoppingCart /></span><span className="icon_text">Kosár</span>
             </div>
           </div>)}
         <RegisterWindow
@@ -223,8 +223,6 @@ export default class App extends Component {
         />
         <div className="logo">
           <img className="logo_img" onClick={() => this.changeView('main')} src={logo} width={80} height={100} alt="logo" />
-          {/*<div className="button regular" onClick={() => this.hello()}>Rendelés</div>*/}
-          {/*<div className="button regular" onClick={() => this.hello()}>Mi az a Plant B?</div>*/}
         </div>
         <div className="navbar">
           <ul className="navbar_list">
