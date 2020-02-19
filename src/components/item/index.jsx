@@ -62,13 +62,13 @@ class Item extends React.Component {
                 <div>
                   <input type="checkbox" name={extras[1]} id={`extra_2_${categoryId}_${itemId}`} value={extras[1]}/>
                   <label className="extra1" htmlFor={`extra_2_${categoryId}_${itemId}`}>{extras[1]}</label>
-                </div>) : (<div></div>)
+                </div>) : (<div className="placeholder"></div>)
               }
               {2 < extras.length ? (
                 <div>
                   <input type="checkbox" name={extras[2]} id={`extra_3_${categoryId}_${itemId}`} value={extras[2]}/>
                   <label className="extra1" htmlFor={`extra_3_${categoryId}_${itemId}`}>{extras[2]}</label>
-                </div>) : (<div></div>)
+                </div>) : (<div className="placeholder"></div>)
               }
             </section>
             <section className="plan cf">
@@ -76,7 +76,7 @@ class Item extends React.Component {
               <div>
                 <input type="checkbox" name={extras[3]} id={`extra_4_${categoryId}_${itemId}`} value={extras[3]}/>
                 <label className="extra2" htmlFor={`extra_4_${categoryId}_${itemId}`}>{extras[3]}</label>
-              </div>) : (<div></div>)
+              </div>) : (<div className="placeholder_2"></div>)
             }
             </section>
             <input className="submit_button" type="submit" value="Kosárba"/>
