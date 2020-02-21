@@ -16,8 +16,10 @@ import LoginWindow from '../components/login';
 import CartWindow from '../components/cart';
 import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 const bcrypt = require('bcryptjs');
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const MyPerson = styled(PersonPin)({
   color: 'black',
@@ -39,7 +41,8 @@ export default class App extends Component {
     registerModalVisible: false,
     loginModalVisible: false,
     cartModalVisible: false,
-    view: 'main'
+    view: 'main',
+    startDate: new Date(),
   };
 
   componentDidMount() {
@@ -63,9 +66,7 @@ export default class App extends Component {
   };
 
   showCart = () => {
-    console.log(this.state.cart);
-    const { cartModalVisible } = this.state;
-    this.setState({ cartModalVisible: !cartModalVisible });
+    this.setState({ view: "cart" });
   };
 
   login = () => {
@@ -183,6 +184,12 @@ export default class App extends Component {
   changeView = (view) => {
     this.setState({view});
   }
+
+  handleChange = date => {
+    this.setState({
+      startDate: date
+    });
+  };
 
   render() {
     return (
@@ -370,6 +377,49 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={4}
               />
+          </div>) : (<div></div>)}
+        {"cart" === this.state.view ? (
+          <div className="cart_main">
+            <div className="delimiter"></div>
+            <div className="cart-content">
+              <div className="cart-header">
+                <span className="cart-heading">Kosár tartalma</span>
+              </div>
+              <div className="delimiter"></div>
+              <div className="cart-body">
+                <table className="cart-table">
+                </table>
+                <div className="cart_table_container">
+                  <table className="cart-table">
+                    <tbody>
+                    {Object.entries(this.state.cart).map(([key, value]) => (
+                      <tr className="cart_table_row">
+                        <td className="table-cell left">{key}</td>
+                        {undefined === value.extras ? (
+                          <td className="table-cell left">-</td>
+                        ) : (
+                          <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
+                        )}
+                        <td className="table-cell right">{value.amount}</td>
+                        <td className="table-cell right">{value.price} €</td>
+                      </tr>
+                    ))}
+                    </tbody>
+                  </table>
+                </div>
+                <table className="total-table">
+                  <tr>
+                    <td className="table-cell left">Végösszeg</td>
+                    <td className="table-cell right"></td>
+                    <td className="table-cell right">{this.calculateTotal(this.state.cart)} €</td>
+                  </tr>
+                </table>
+                <DatePicker
+                  selected={this.state.startDate}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
           </div>) : (<div></div>)}
       </div>
     );
