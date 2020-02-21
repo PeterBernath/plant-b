@@ -407,17 +407,17 @@ export default class App extends Component {
                     </tbody>
                   </table>
                 </div>
-                <table className="total-table">
-                  <tr>
-                    <td className="table-cell left">Végösszeg</td>
-                    <td className="table-cell right"></td>
-                    <td className="table-cell right">{this.calculateTotal(this.state.cart)} €</td>
-                  </tr>
-                </table>
-                <DatePicker
-                  selected={this.state.startDate}
-                  onChange={this.handleChange}
-                />
+                <div className="delivery_time">
+                <p>Mikorra szeretnéd?</p>
+                  <DatePicker
+                    selected={this.state.startDate}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div className="total">
+                  <p>Végösszeg</p>
+                  <p>{this.calculateTotal(this.state.cart)} €</p>
+                </div>
               </div>
             </div>
           </div>) : (<div></div>)}
