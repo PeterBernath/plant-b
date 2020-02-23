@@ -18,8 +18,11 @@ import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
 import Swal from 'sweetalert2';
 const bcrypt = require('bcryptjs');
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+const moment = require('moment');
+import { DatePicker, TimePicker } from 'antd';
+import "antd/dist/antd.css";
+
+const format = 'HH:mm';
 
 const MyPerson = styled(PersonPin)({
   color: 'black',
@@ -43,6 +46,7 @@ export default class App extends Component {
     cartModalVisible: false,
     view: 'main',
     startDate: new Date(),
+    time: '10:00',
   };
 
   componentDidMount() {
@@ -410,8 +414,11 @@ export default class App extends Component {
                 <div className="delivery_time">
                 <p>Mikorra szeretnéd?</p>
                   <DatePicker
-                    selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    
+                  />
+                  <TimePicker
+                    defaultValue={moment('12:08', format)}
+                    format={format}
                   />
                 </div>
                 <div className="total">
