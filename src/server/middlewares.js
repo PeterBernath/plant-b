@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User } = require('./models/User');
+const { Order } = require('./models/Order');
 
 const sequelize = new Sequelize('mariadb://root:@localhost:3306/plantb');
 const jwtSecret = 'LKhsfdkashflkgksaufghjhsadfk';
@@ -18,6 +19,26 @@ const registerUser = (req, res) => {
     }))
     .then((user) => {
       console.log(user.toJSON());
+      res.json({ success: true });
+    })
+    .catch(() => {
+      res.json({ success: false });
+    }) 
+};
+
+const newOrder = (req, res) => {
+  let { username, date, cart } = req.body;
+  cart = JSON.stringify(cart);
+  date = new Date(date);
+  console.log('req.body', req.body);
+  sequelize.sync()
+    .then(() => Order.create({
+      username,
+      order_date: date,
+      cart
+    }))
+    .then((order) => {
+      console.log(order.toJSON());
       res.json({ success: true });
     })
     .catch(() => {
@@ -66,4 +87,5 @@ const login = (req, res) => {
 module.exports = {
   registerUser,
   login,
+  newOrder
 };

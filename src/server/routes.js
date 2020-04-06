@@ -7,4 +7,6 @@ router.post('/register', middlewares.registerUser);
 
 router.post('/login', middlewares.login);
 
+router.post('/new-order', middlewares.newOrder);
+
 module.exports = router;

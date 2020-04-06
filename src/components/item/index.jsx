@@ -47,8 +47,7 @@ class Item extends React.Component {
     } = this.props;
     return (
       <div className="item">
-        {undefined === extras ? (<span></span>) : 
-        !this.state.visible ? 
+        {!this.state.visible | undefined === extras ?
         (
         <div className="image_container">
           <img className="image" src={image} alt="item" />
@@ -90,7 +89,7 @@ class Item extends React.Component {
             {!active ? (
               <div />
             ) : undefined === extras ? (
-              <button onClick={() => this.addToCartFunc(heading, price)} value={heading} className="add-to-cart">Kosárba</button>
+              <button onClick={() => addToCartFunc(heading, price)} value={heading} className="add-to-cart">Kosárba</button>
             ) : (
               <button onClick={() => this.changeVisibility()} value={heading} className="add-to-cart">Feltétek</button>
             )}

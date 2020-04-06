@@ -41,10 +41,6 @@ class FoodCategory extends React.Component {
 
 FoodCategory.propTypes = {
   items: PropTypes.arrayOf(PropTypes.string).isRequired,
-  heading: PropTypes.string.isRequired,
-  colorDark: PropTypes.string.isRequired,
-  colorLight: PropTypes.string.isRequired,
-  gradient: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   addToCartFunc: PropTypes.func.isRequired,
 };

@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 // const os = require('os');
 const router = require('./routes');
 const user = require('./models/User');
+const order = require('./models/Order');
 
 const port = 8080;
 const app = express();
 user.initUser();
+order.initOrder();
 
 
 app.use(bodyParser.json());

@@ -5,7 +5,7 @@ import PersonPin from '@material-ui/icons/PersonPin';
 import Input from '@material-ui/icons/Input';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import logo from '../../public/logo_new.png';
-import lunch_header from '../../public/lunch_header.png';
+import breakfast from '../../public/breakfast.png';
 import taco from '../../public/taco.png';
 import cake from '../../public/cake.png';
 import smoothie from '../../public/smoothie.png';
@@ -46,7 +46,7 @@ export default class App extends Component {
     cartModalVisible: false,
     view: 'main',
     startDate: new Date(),
-    time: '10:00',
+    time: '10:00'
   };
 
   componentDidMount() {
@@ -123,11 +123,33 @@ export default class App extends Component {
         if (true === res.success) {
           console.log(res);
           sessionStorage.setItem('jwtToken', res.token);
-          this.setState({ view: 'main', loggedIn: true });
+          this.setState({ view: 'main', loggedIn: true, username: data.get('username')});
         } else {
           Swal.fire({text: 'Helytelen felhasználónév vagy jelszó', icon:'error'})
         }
       });
+  };
+
+  handleNewOrder = () => {
+    const orderData = {
+      username: this.state.username,
+      date: new Date(this.state.year, this.state.month, this.state.day, this.state.hours, this.state.minutes),
+      cart: this.state.cart
+    };
+    fetch('/api/new-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData),
+    })
+    .then((res) => res.json())
+    .then((json) => {
+      if (true === json.success) {
+        Swal.fire({text: 'Sikeres rendelés', icon:'success'})
+        this.setState({ view: 'main' });
+      } else {
+        Swal.fire({text: 'Hiba történt', icon:'error'})
+      }
+    })
   };
 
   addToCartWithExtras = async (item, price, extras_keys, event) => {
@@ -192,6 +214,21 @@ export default class App extends Component {
   handleChange = date => {
     this.setState({
       startDate: date
+    });
+  };
+
+  handleDate = dates => {
+    this.setState({
+      day: dates._d.getDate(),
+      month: dates._d.getMonth(),
+      year: dates._d.getFullYear()
+    });
+  };
+
+  handleTime = time => {
+    this.setState({
+      hours: time._d.getHours() + (Math.abs(time._d.getTimezoneOffset()) / 60),
+      minutes: time._d.getMinutes()
     });
   };
 
@@ -289,145 +326,152 @@ export default class App extends Component {
             </div>
           </div>) : (<div></div>)}
           {"breakfast" === this.state.view ? (
-          <div>
-            <div className="breakfast_header_container">
-              <div className="breakfast_header_inner_container" >
-                <div className="breakfast_header_img_container" >
-                    <img className="breakfast_header_img" src={lunch_header} width={300} height={300} />
+            <div>
+              <div className="food_category_header_container breakfast_bg">
+                <div className="food_category_header_inner_container" >
+                  <div className="food_category_header_img_container" >
+                      <img className="food_category_header_img" src={breakfast}/>
+                  </div>
+                  <div className="food_category_header_text_container">
+                    <div className="food_category_header_header breakfast_text">Reggelik</div>
+                    <div className="food_category_header_text breakfast_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. </div>
+                  </div>
                 </div>
-                <div className="breakfast_header_text_container">
-                  <div className="breakfast_header_header">Reggelik</div>
-                  <div className="breakfast_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              </div>
+              <FoodCategory
+                  items={items.breakfast}
+                  active={this.state.loggedIn}
+                  addToCartFunc={this.addToCart}
+                  addToCartWithExtrasFunc={this.addToCartWithExtras}
+                  categoryId={1}
+                />
+            </div>) : (<div></div>)
+          }
+          {"lunch" === this.state.view ? (
+            <div>
+            <div className="food_category_header_container lunch_bg">
+              <div className="food_category_header_inner_container" >
+                <div className="food_category_header_img_container" >
+                    <img className="food_category_header_img" src={taco}/>
+                </div>
+                <div className="food_category_header_text_container">
+                  <div className="food_category_header_header lunch_text">Ebédek</div>
+                  <div className="food_category_header_text lunch_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua. </div>
                 </div>
               </div>
             </div>
             <FoodCategory
-                items={items.breakfast}
-                active={this.state.loggedIn}
-                addToCartFunc={this.addToCart}
-                addToCartWithExtrasFunc={this.addToCartWithExtras}
-                categoryId={1}
-              />
-          </div>) : (<div></div>)}
-          {"lunch" === this.state.view ? (
-          <div>
-            <div className="lunch_header_container">
-              <div className="lunch_header_header">Ebédek</div>
-              <div className="lunch_header_text_container">
-                <div className="lunch_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                tempor incididunt ut labore et dolore magna aliqua. </div>
-              </div>
-              <div className="lunch_header_img_container" >
-                <img className="lunch_header_img" src={taco} width={64} height={64} />
-              </div>
-            </div>
-            {/* <FoodCategory
                 items={items.lunch}
-                heading="Ebéd"
-                colorDark="#f9f9f9"
-                colorLight="#ffe5cc"
-                gradient="#eac7a4"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={2}
-              /> */}
-          </div>) : (<div></div>)}
+              />
+           </div>) : (<div></div>)
+          }
           {"cakes" === this.state.view ? (
-          <div>
-            <div className="cakes_header_container">
-              <p className="cakes_header_header">Desszertek</p>
-              <div className="cakes_header_text_container">
-                <p className="cakes_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-              <div className="cakes_header_img_container" >
-                <img className="cakes_header_img" src={cake} width={64} height={64} />
+            <div>
+            <div className="food_category_header_container cakes_bg">
+              <div className="food_category_header_inner_container" >
+                <div className="food_category_header_img_container" >
+                    <img className="food_category_header_img" src={cake}/>
+                </div>
+                <div className="food_category_header_text_container">
+                  <div className="food_category_header_header cakes_text">Ebédek</div>
+                  <div className="food_category_header_text cakes_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. </div>
+                </div>
               </div>
             </div>
             <FoodCategory
                 items={items.dessert}
-                heading="Desszert"
-                colorDark="#f9f9f9"
-                colorLight="#ddafba"
-                gradient="#fff7f9"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={3}
               />
-          </div>) : (<div></div>)}
+            </div>) : (<div></div>)
+          }
           {"drinks" === this.state.view ? (
-          <div>
-            <div className="drinks_header_container">
-              <p className="drinks_header_header">Üdítők</p>
-              <div className="drinks_header_text_container">
-                <p className="drinks_header_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-              <div className="drinks_header_img_container" >
-                <img className="drinks_header_img" src={smoothie} width={64} height={64} />
+            <div>
+            <div className="food_category_header_container drinks_bg">
+              <div className="food_category_header_inner_container" >
+                <div className="food_category_header_img_container" >
+                    <img className="food_category_header_img" src={smoothie}/>
+                </div>
+                <div className="food_category_header_text_container">
+                  <div className="food_category_header_header drinks_text">Ebédek</div>
+                  <div className="food_category_header_text drinks_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. </div>
+                </div>
               </div>
             </div>
             <FoodCategory
                 items={items.smoothie}
-                heading="Italok"
-                colorDark="#f9f9f9"
-                colorLight="#9e9c9c"
-                gradient="#96C534"
                 active={this.state.loggedIn}
                 addToCartFunc={this.addToCart}
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={4}
               />
-          </div>) : (<div></div>)}
-        {"cart" === this.state.view ? (
-          <div className="cart_main">
-            <div className="delimiter"></div>
-            <div className="cart-content">
-              <div className="cart-header">
-                <span className="cart-heading">Kosár tartalma</span>
-              </div>
+            </div>) : (<div></div>)
+          }
+          {"cart" === this.state.view ? (
+            <div className="cart_main">
               <div className="delimiter"></div>
-              <div className="cart-body">
-                <table className="cart-table">
-                </table>
-                <div className="cart_table_container">
+              <div className="cart-content">
+                <div className="cart-header">
+                  <span className="cart_heading large">Kosár tartalma</span>
+                </div>
+                <div className="delimiter"></div>
+                <div className="cart-body">
                   <table className="cart-table">
-                    <tbody>
-                    {Object.entries(this.state.cart).map(([key, value]) => (
-                      <tr className="cart_table_row">
-                        <td className="table-cell left">{key}</td>
-                        {undefined === value.extras ? (
-                          <td className="table-cell left">-</td>
-                        ) : (
-                          <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
-                        )}
-                        <td className="table-cell right">{value.amount}</td>
-                        <td className="table-cell right">{value.price} €</td>
-                      </tr>
-                    ))}
-                    </tbody>
                   </table>
-                </div>
-                <div className="delivery_time">
-                <p>Mikorra szeretnéd?</p>
-                  <DatePicker
-                    
-                  />
-                  <TimePicker
-                    defaultValue={moment('12:08', format)}
-                    format={format}
-                  />
-                </div>
-                <div className="total">
-                  <p>Végösszeg</p>
-                  <p>{this.calculateTotal(this.state.cart)} €</p>
+                  <div className="cart_table_container">
+                    <table className="cart-table">
+                      <tbody>
+                      {Object.entries(this.state.cart).map(([key, value]) => (
+                        <tr className="cart_table_row">
+                          <td className="table-cell left">{key}</td>
+                          {undefined === value.extras ? (
+                            <td className="table-cell left">-</td>
+                          ) : (
+                            <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
+                          )}
+                          <td className="table-cell right">{value.amount}</td>
+                          <td className="table-cell right">{value.price.toFixed(2)} €</td>
+                        </tr>
+                      ))}
+                        <tr>
+                          <td className="table-cell left bold"></td>
+                          <td className="table-cell left"></td>
+                          <td className="table-cell right"></td>
+                          <td className="table-cell right bold">{this.calculateTotal(this.state.cart).toFixed(2)} €</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="delivery_time">
+                  <div className="cart_heading medium">Mikorra szeretnéd?</div>
+                    <DatePicker
+                      defaultValue={moment()}
+                      onChange={(dateString) => {this.handleDate(dateString)}}
+                    />
+                    <span className="time_picker">
+                      <TimePicker
+                        defaultValue={moment()}
+                        format={format}
+                        onChange={(time) => {this.handleTime(time)}}
+                      />
+                    </span>
+                  </div>
+                  <div className="total">
+                  <button className="login_button" onClick={this.handleNewOrder}>Megrendelem</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>) : (<div></div>)}
+            </div>) : (<div></div>)}
       </div>
     );
   }
