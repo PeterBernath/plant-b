@@ -1,6 +1,6 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
-// const os = require('os');
 const router = require('./routes');
 const user = require('./models/User');
 const order = require('./models/Order');
@@ -10,12 +10,16 @@ const app = express();
 user.initUser();
 order.initOrder();
 
-
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 app.use(bodyParser.json());
 app.use('/api', router);
 
-app.use((req, res) => {
-  res.send('Hello');
+// app.use((req, res) => {
+//   res.send('Hello');
+// });
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
 });
 
 app.use((err, req, res) => {
