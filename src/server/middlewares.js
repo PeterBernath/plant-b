@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs');
 const { User } = require('./models/User');
 const { Order } = require('./models/Order');
 
-const sequelize = new Sequelize('mariadb://root:@localhost:3306/plantb');
+const host = process.env.MYSQL_HOST || "localhost";
+const sequelize = new Sequelize(`mariadb://root:@${host}:3306/plantb`);
 const jwtSecret = 'LKhsfdkashflkgksaufghjhsadfk';
 
 const registerUser = (req, res) => {
@@ -30,7 +31,11 @@ const newOrder = (req, res) => {
   let { username, date, cart } = req.body;
   cart = JSON.stringify(cart);
   date = new Date(date);
+  console.log('*******************************************************');
   console.log('req.body', req.body);
+  console.log(cart);
+  console.log(cart.length);
+  console.log('*******************************************************');
   sequelize.sync()
     .then(() => Order.create({
       username,
@@ -41,7 +46,8 @@ const newOrder = (req, res) => {
       console.log(order.toJSON());
       res.json({ success: true });
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e);
       res.json({ success: false });
     }) 
 };

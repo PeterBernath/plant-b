@@ -14,10 +14,6 @@ app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 app.use(bodyParser.json());
 app.use('/api', router);
 
-// app.use((req, res) => {
-//   res.send('Hello');
-// });
-
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
 });

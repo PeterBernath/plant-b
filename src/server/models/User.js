@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('mariadb://root:@localhost:3306/plantb');
+const host = process.env.MYSQL_HOST || "localhost";
+const sequelize = new Sequelize(`mariadb://root:@${host}:3306/plantb`);
 class User extends Sequelize.Model {}
 
 const initUser = () => {

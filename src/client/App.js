@@ -11,9 +11,6 @@ import cake from '../../public/cake.png';
 import smoothie from '../../public/smoothie.png';
 import introBackground from '../../public/intro_background.png';
 import FoodCategory from '../components/food-category';
-import RegisterWindow from '../components/register';
-import LoginWindow from '../components/login';
-import CartWindow from '../components/cart';
 import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
 import Swal from 'sweetalert2';
@@ -41,18 +38,16 @@ export default class App extends Component {
     main: true,
     loggedIn: false,
     cart: JSON.parse(sessionStorage.getItem('cart')) || {},
-    registerModalVisible: false,
-    loginModalVisible: false,
-    cartModalVisible: false,
+    username: sessionStorage.getItem('username'),
     view: 'main',
     startDate: new Date(),
     time: '10:00'
   };
 
   componentDidMount() {
+    console.log(this.state);
     const token = sessionStorage.getItem('jwtToken');
     if (token) {
-      console.log(token);
       this.setState({ loggedIn: true });
     }
   }
@@ -85,12 +80,13 @@ export default class App extends Component {
   handleRegistration = (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
+    const username = data.get('username');
     const password = data.get('password');
     bcrypt.hash(password, 10, (err, hash) => {
       const userData = {
         first_name: data.get('first_name'),
         last_name: data.get('last_name'),
-        username: data.get('username'),
+        username: username,
         password: hash
       };
       fetch('/api/register', {
@@ -102,7 +98,7 @@ export default class App extends Component {
       .then((json) => {
         if (true === json.success) {
           Swal.fire({text: 'Sikeres regisztráció', icon:'success'})
-          this.setState({ view: 'main' });
+          this.handleLoginAfterReg(username, password);
         } else {
           Swal.fire({text: 'Ez a felhasználónév már foglalt', icon:'error'})
         }
@@ -123,9 +119,29 @@ export default class App extends Component {
         if (true === res.success) {
           console.log(res);
           sessionStorage.setItem('jwtToken', res.token);
+          sessionStorage.setItem('username', data.get('username'));
           this.setState({ view: 'main', loggedIn: true, username: data.get('username')});
         } else {
           Swal.fire({text: 'Helytelen felhasználónév vagy jelszó', icon:'error'})
+        }
+      });
+  };
+
+  handleLoginAfterReg = (username, password) => {
+    fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    })
+      .then(res => res.json())
+      .then((res) => {
+        if (true === res.success) {
+          console.log(res);
+          sessionStorage.setItem('jwtToken', res.token);
+          sessionStorage.setItem('username', username);
+          this.setState({ view: 'main', loggedIn: true, username})
+        } else {
+          Swal.fire({text: 'Hiba történt', icon:'error'});
         }
       });
   };
@@ -144,7 +160,8 @@ export default class App extends Component {
     .then((res) => res.json())
     .then((json) => {
       if (true === json.success) {
-        Swal.fire({text: 'Sikeres rendelés', icon:'success'})
+        Swal.fire({text: 'Sikeres rendelés', icon:'success'});
+        this.clearCart();
         this.setState({ view: 'main' });
       } else {
         Swal.fire({text: 'Hiba történt', icon:'error'})
@@ -232,6 +249,11 @@ export default class App extends Component {
     });
   };
 
+  clearCart = () => {
+    this.setState({ cart: {} });
+    sessionStorage.removeItem('cart');
+  }
+
   render() {
     return (
       <div>
@@ -253,22 +275,6 @@ export default class App extends Component {
               <span className="cart_icon"><MyShoppingCart /></span><span className="icon_text">Kosár</span>
             </div>
           </div>)}
-        <RegisterWindow
-          handlerFunc={this.handleRegistration}
-          modalVisible={this.state.registerModalVisible}
-          closeFunc={this.register}
-        />
-        <LoginWindow
-          handlerFunc={this.handleLogin}
-          modalVisible={this.state.loginModalVisible}
-          closeFunc={this.login}
-        />
-        <CartWindow
-          cart={this.state.cart}
-          modalVisible={this.state.cartModalVisible}
-          closeFunc={this.showCart}
-          cartTotal={this.calculateTotal(this.state.cart)}
-        />
         <div className="logo">
           <img className="logo_img" onClick={() => this.changeView('main')} src={logo} width={80} height={100} alt="logo" />
         </div>
@@ -379,7 +385,7 @@ export default class App extends Component {
                     <img className="food_category_header_img" src={cake}/>
                 </div>
                 <div className="food_category_header_text_container">
-                  <div className="food_category_header_header cakes_text">Ebédek</div>
+                  <div className="food_category_header_header cakes_text">Desszertek</div>
                   <div className="food_category_header_text cakes_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua. </div>
                 </div>
@@ -402,7 +408,7 @@ export default class App extends Component {
                     <img className="food_category_header_img" src={smoothie}/>
                 </div>
                 <div className="food_category_header_text_container">
-                  <div className="food_category_header_header drinks_text">Ebédek</div>
+                  <div className="food_category_header_header drinks_text">Üdítők</div>
                   <div className="food_category_header_text drinks_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua. </div>
                 </div>
@@ -421,10 +427,20 @@ export default class App extends Component {
             <div className="cart_main">
               <div className="delimiter"></div>
               <div className="cart-content">
-                <div className="cart-header">
-                  <span className="cart_heading large">Kosár tartalma</span>
+                {0 === Object.keys(this.state.cart).length ? (
+                <div>
+                  <div className="cart-header">
+                    <span className="cart_heading large">Kosár tartalma</span>
+                  </div>
+                  <div className="delimiter"></div>
+                  <div className="empty_cart">A kosár üres</div>
                 </div>
-                <div className="delimiter"></div>
+                ) : (
+                <div>
+                  <div className="cart-header">
+                    <span className="cart_heading large">Kosár tartalma</span><button className="cart_empty" onClick={this.clearCart}>x</button>
+                  </div>
+                  <div className="delimiter"></div>
                 <div className="cart-body">
                   <table className="cart-table">
                   </table>
@@ -467,9 +483,15 @@ export default class App extends Component {
                     </span>
                   </div>
                   <div className="total">
-                  <button className="login_button" onClick={this.handleNewOrder}>Megrendelem</button>
+                  {undefined === this.state.hours | undefined === this.state.month ? (
+                    <button className="btn disabled" disabled>Megrendelem</button>
+                  ) : (
+                    <button className="btn active" onClick={this.handleNewOrder}>Megrendelem</button>
+                  )}
                   </div>
                 </div>
+              </div>
+              )}
               </div>
             </div>) : (<div></div>)}
       </div>
