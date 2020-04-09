@@ -20,6 +20,7 @@ class Modal extends React.Component {
       <div id="myModal" className="modal" style={this.props.modalVisible ? modalVisible : modalHidden}>
         <div className="modal-content">
           <span className="close" onClick={this.props.closeFunc}>&times;</span>
+          <div className="modal_header">Válaszd ki a feltéteket</div>
           <div className="extras_container">
           <form className="form cf" onSubmit={(e) => this.addToCartLocal(item.heading, item.price, item.extras_keys, e)}>
             <section className="plan cf">
@@ -45,7 +46,7 @@ class Modal extends React.Component {
               </div>) : (<div className="placeholder_2"></div>)
             }
             </section>
-            <input className="submit_button" type="submit" value="Kosárba"/>
+            <input className="msubmit_button" type="submit" value="Kosárba"/>
           </form>
           </div>
         </div>

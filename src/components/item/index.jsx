@@ -53,7 +53,7 @@ class Item extends React.Component {
           <img className="image" src={image} alt="item" />
         </div>
         ) : (
-        <div className="extras_container">
+        <div className="extras_container eborder eheight">
           <form className="form cf" onSubmit={(e) => this.addToCartLocal(heading, price, extras, e)}>
             <section className="plan cf">
               <input type="checkbox" name={extras[0]} id={`extra_1_${categoryId}_${itemId}`} value={extras[0]}/><label className="extra1" htmlFor={`extra_1_${categoryId}_${itemId}`}>{extras[0]}</label>
