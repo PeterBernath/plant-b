@@ -11,6 +11,7 @@ import cake from '../../public/cake.png';
 import smoothie from '../../public/smoothie.png';
 import introBackground from '../../public/intro_background.png';
 import FoodCategory from '../components/food-category';
+import Modal from '../components/modal'
 import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
 import Swal from 'sweetalert2';
@@ -41,7 +42,11 @@ export default class App extends Component {
     username: sessionStorage.getItem('username'),
     view: 'main',
     startDate: new Date(),
-    time: '10:00'
+    time: '10:00',
+    modalVisible: false,
+    item: {
+      extras_keys: []
+    },
   };
 
   componentDidMount() {
@@ -185,8 +190,8 @@ export default class App extends Component {
       }
     }
     extras.push(item_extras)
-    if (cart[item] === undefined) cart[item] = { amount: 1, price, extras };
-    else cart[item] = { amount: cart[item].amount + 1, price, extras };
+    if (cart[item] === undefined) cart[item] = { amount: 1, price, extras, extras_keys };
+    else cart[item] = { amount: cart[item].amount + 1, price, extras, extras_keys };
     await this.setState({ cart });
     console.log(this.state.cart);
     sessionStorage.setItem('cart', JSON.stringify(cart));
@@ -196,6 +201,15 @@ export default class App extends Component {
     const cart = this.state.cart;
     if (cart[item] === undefined) cart[item] = { amount: 1, price };
     else cart[item] = { amount: cart[item].amount + 1, price };
+    await this.setState({ cart });
+    console.log(this.state.cart);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  };
+
+  removeFromCart = async (item, price) => {
+    const cart = this.state.cart;
+    if (1 === cart[item].amount) delete cart[item];
+    else cart[item] = { amount: cart[item].amount - 1, price };
     await this.setState({ cart });
     console.log(this.state.cart);
     sessionStorage.setItem('cart', JSON.stringify(cart));
@@ -254,9 +268,24 @@ export default class App extends Component {
     sessionStorage.removeItem('cart');
   }
 
+  showModalAndSetState = (heading, price, extras_keys) => {
+    const item = { heading, price, extras_keys }
+    this.setState({ modalVisible: !this.state.modalVisible, item });
+  }
+
+  changeModalVisibility = () => {
+    this.setState({ modalVisible: !this.state.modalVisible });
+  }
+
   render() {
     return (
       <div>
+        <Modal
+          item={this.state.item}
+          handlerFunc={this.addToCartWithExtras}
+          modalVisible={this.state.modalVisible}
+          closeFunc={this.changeModalVisibility}
+        />
         {!this.state.loggedIn ? (
           <div>
             <div className="login" onClick={() => this.login()}>
@@ -455,7 +484,12 @@ export default class App extends Component {
                           ) : (
                             <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
                           )}
-                          <td className="table-cell right">{value.amount}</td>
+                          <td className="table-cell right">
+                            <button className="modify_amount" onClick={() => this.removeFromCart(key, value.price)}>-</button>
+                            {value.amount}
+                            {/* <button className="modify_amount" onClick={() => this.addToCart(key, value.price)}>+</button> */}
+                            <button className="modify_amount" onClick={() => this.showModalAndSetState(key, value.price, value.extras_keys)}>+</button>
+                          </td>
                           <td className="table-cell right">{value.price.toFixed(2)} €</td>
                         </tr>
                       ))}

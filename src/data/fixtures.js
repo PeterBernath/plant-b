@@ -15,6 +15,7 @@ import smoothie3 from '../../public/smoothie3.png';
 const items = {
   breakfast: [
     {
+      id: 0,
       image: sandwich,
       heading: 'Zöldséges szendvics',
       desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
@@ -22,6 +23,7 @@ const items = {
       extras: ['Retek']
     },
     {
+      id: 1,
       image: sandwich2,
       heading: 'Paradicsomos szendvics',
       desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
@@ -29,6 +31,7 @@ const items = {
       extras: ['Uborka', 'Paradicsom']
     },
     {
+      id: 2,
       image: sandwich3,
       heading: 'Kesus szendvics',
       desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
@@ -36,6 +39,7 @@ const items = {
       extras: ['Uborka', 'Paradicsom', 'Saláta', 'Csípős']
     },
     {
+      id: 3,
       image: sandwich,
       heading: 'Zöldséges szendvics',
       desc: 'teljes kiőrlésű kenyér, paradicsom, rukkola, kesus kenő',
@@ -45,18 +49,21 @@ const items = {
   ],
   lunch: [
     {
+      id: 0,
       image: lunch1,
       heading: 'Vegan Chili Cheese Fries',
       desc: 'chilli, cheese, fries',
       price: 2.5,
     },
     {
+      id: 1,
       image: lunch2,
       heading: 'Mushroom Sandwich',
       desc: 'mushroom, salad, bunny',
       price: 2.6,
     },
     {
+      id: 2,
       image: lunch3,
       heading: 'Veggie Bake',
       desc: 'eggplant, potato, tomato, veggie cheese',
@@ -65,18 +72,21 @@ const items = {
   ],
   dessert: [
     {
+      id: 0,
       image: dessert1,
       heading: 'Blueberry Cheesecake',
       desc: 'blueberry, cheese, dough',
       price: 2,
     },
     {
+      id: 1,
       image: dessert2,
       heading: 'Coconut Balls',
       desc: 'coconut, cocoa, cashew, wheat',
       price: 2.1,
     },
     {
+      id: 2,
       image: dessert3,
       heading: 'Fruit Salad',
       desc: 'pineapple, almond, chocolate',
@@ -85,18 +95,21 @@ const items = {
   ],
   smoothie: [
     {
+      id: 0,
       image: smoothie1,
       heading: 'Apple Smoothie',
       desc: 'apple, spirulina, spinach, orange, lemon',
       price: 1.5,
     },
     {
+      id: 1,
       image: smoothie2,
       heading: 'Blueberry Smoothie',
       desc: 'blueberry, banana, oatmilk',
       price: 1.6,
     },
     {
+      id: 2,
       image: smoothie3,
       heading: 'Banana Smoothie',
       desc: 'banana, coconut milk',
