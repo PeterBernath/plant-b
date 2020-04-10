@@ -36,6 +36,13 @@ img {
   cursor: pointer;
 }
 
+.main_header {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
 .navbar li {
   display: inline;
 }
@@ -49,7 +56,7 @@ img {
   width: 400px;
   font-family: 'Libre Franklin';
   font-weight: 800;
-  margin: 15px auto;
+  margin: 15px auto 0 auto;
   font-size: 14px;
 }
 
@@ -63,6 +70,11 @@ img {
 
 .navbar_item:hover {
   color: rgb(112, 112, 112);
+}
+
+.white_row {
+  height: 1px;
+  border-bottom: rgb(190, 190, 190) 0.5px solid;
 }
 
 .intro_background_container {
@@ -656,6 +668,9 @@ img {
 }
 
 .cart-content {
+  @media (max-width: 480px) {
+    width: 95%;
+  }
   margin: auto;
   width: 70%;
 }
@@ -675,21 +690,44 @@ img {
   float: right;
   border: none;
   background-color: transparent;
-  font-size: 30px;
+  font-size: 20px;
   cursor: pointer;
   font-weight: 100;
   color: rgb(255, 187, 187);
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow:  3px 3px 7px #c7c7c7, 
+              -3px -3px 7px #ffffff;
+  width: 30px;
+  height: 30px;
+}
+
+.remove_item {
+  font-family: 'Indie Flower';
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 100;
+  color: rgb(255, 187, 187);
+  margin-left: 5px;
 }
 
 .modify_amount {
   font-family: 'Indie Flower';
   border: none;
   background-color: transparent;
-  font-size: 28px;
+  font-size: 14px;
   cursor: pointer;
   font-weight: 100;
   color: rgb(255, 187, 187);
   margin: 0 10px;
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow:  3px 3px 7px #c7c7c7, 
+              -3px -3px 7px #ffffff;
+  width: 20px;
+  height: 20px;
 }
 
 .large {
@@ -709,7 +747,15 @@ tr.cart_table_row td {
   border-bottom: 1pt solid #e8e8e8;
 }
 
+p {
+  margin-bottom: 0;
+}
+
 .table-cell tr, td, th {
+  @media (max-width: 480px) {
+    font-size: 12px;
+    padding: 10px 0;
+  }
   height: 20px;
   padding: 20px 0;
   font-family: 'Comfortaa';
@@ -745,10 +791,16 @@ input {
 }
 
 .total {
+  @media (max-width:480px) {
+    width: 100%;
+    margin: auto;
+  }
+  @media (min-width:480px) {
+    float: right;
+    display: inline-block;
+  }
   width: 250px;
   height: 200px;
-  display: inline-block;
-  float: right;
 }
 
 .cart-body {
@@ -781,7 +833,14 @@ input {
   }
 
   .small {
+    @media (max-width: 480px) {
+      font-size: 9px;
+    }
     font-size: 12px;
+  }
+
+  .wide {
+    width: 120px;
   }
 
   .total-table {
@@ -803,6 +862,10 @@ input {
 }
 
 .btn {
+  @media (max-width:480px) {
+    width: 100%;
+    height: 65px;
+  }
   width: 93%;
   height: 45px;
   border: none;
@@ -838,20 +901,21 @@ input {
 
 .submit_button {
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 100;
   cursor: pointer;
   font-family: 'Libre Franklin';
-  width: 208px;
+  width: 100%;
   height: 50px;
-  bottom: -45px;
-  margin: 0 23px;
-  background-color: #ff424e;
+  background-color: #eff1f3;
   border: none;
-  color: #ffffff;
+  color: #97a1ac;
+  margin-top: 24px;
+
 }
 
 .submit_button:hover{
-  background-color: #e0313c;
+  background-color: #97a1ac;
+  color: #eff1f3;
 }
 
 .msubmit_button {

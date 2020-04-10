@@ -167,7 +167,14 @@ export default class App extends Component {
       if (true === json.success) {
         Swal.fire({text: 'Sikeres rendelés', icon:'success'});
         this.clearCart();
-        this.setState({ view: 'main' });
+        this.setState({
+          view: 'main',
+          year: undefined,
+          month: undefined,
+          day: undefined,
+          hours: undefined,
+          minutes: undefined
+        });
       } else {
         Swal.fire({text: 'Hiba történt', icon:'error'})
       }
@@ -194,6 +201,18 @@ export default class App extends Component {
     else cart[item] = { amount: cart[item].amount + 1, price, extras, extras_keys };
     await this.setState({ cart });
     console.log(this.state.cart);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  };
+
+  removeFromCartWithExtras = async (index, item, price, extras) => {
+    const cart = this.state.cart;
+    if (1 === cart[item].amount) {
+      delete cart[item];
+    } else {
+      cart[item].amount = cart[item].amount - 1;
+      cart[item].extras.splice(index, 1);
+    }
+    await this.setState({ cart });
     sessionStorage.setItem('cart', JSON.stringify(cart));
   };
 
@@ -286,34 +305,37 @@ export default class App extends Component {
           modalVisible={this.state.modalVisible}
           closeFunc={this.changeModalVisibility}
         />
-        {!this.state.loggedIn ? (
-          <div>
-            <div className="login" onClick={() => this.login()}>
-              <span className="login_icon"><MyPerson /></span><span className="icon_text">Bejelentkezés</span>
-            </div>
-            <div className="cart_container">
-              <span className="cart_icon"><MyShoppingCart /></span><span className="icon_text">Kosár</span>
-            </div>
-          </div>) : (
-          <div>
-            <div className="login" onClick={() => this.logout()}>
-              <span className="login_icon"><MyInput /></span><span className="icon_text">Kijelentkezés</span>
-            </div>
-            <div className="cart_container" onClick={() => this.showCart()}>
-              {/*<span className="cart_no_of_itmes">{this.noOfItemsInCart(this.state.cart)}</span>*/}
-              <span className="cart_icon"><MyShoppingCart /></span><span className="icon_text">Kosár</span>
-            </div>
-          </div>)}
-        <div className="logo">
-          <img className="logo_img" onClick={() => this.changeView('main')} src={logo} width={80} height={100} alt="logo" />
-        </div>
-        <div className="navbar">
-          <ul className="navbar_list">
-            <li className="navbar_item" onClick={() => this.changeView('breakfast')}>Reggelik</li>
-            <li className="navbar_item" onClick={() => this.changeView('lunch')}>Ebédek</li>
-            <li className="navbar_item" onClick={() => this.changeView('cakes')}>Desszertek</li>
-            <li className="navbar_item" onClick={() => this.changeView('drinks')}>Üdítők</li>
-          </ul>
+        <div className="main_header">
+          {!this.state.loggedIn ? (
+            <div>
+              <div className="login" onClick={() => this.login()}>
+                <span className="login_icon"><MyPerson /></span><span className="icon_text">Bejelentkezés</span>
+              </div>
+              <div className="cart_container">
+                <span className="cart_icon"><MyShoppingCart /></span><span className="icon_text">Kosár</span>
+              </div>
+            </div>) : (
+            <div>
+              <div className="login" onClick={() => this.logout()}>
+                <span className="login_icon"><MyInput /></span><span className="icon_text">Kijelentkezés</span>
+              </div>
+              <div className="cart_container" onClick={() => this.showCart()}>
+                {/*<span className="cart_no_of_itmes">{this.noOfItemsInCart(this.state.cart)}</span>*/}
+                <span className="cart_icon"><MyShoppingCart /></span><span className="icon_text">Kosár</span>
+              </div>
+            </div>)}
+          <div className="logo">
+            <img className="logo_img" onClick={() => this.changeView('main')} src={logo} width={80} height={100} alt="logo" />
+          </div>
+          <div className="navbar">
+            <ul className="navbar_list">
+              <li className="navbar_item" onClick={() => this.changeView('breakfast')}>Reggelik</li>
+              <li className="navbar_item" onClick={() => this.changeView('lunch')}>Ebédek</li>
+              <li className="navbar_item" onClick={() => this.changeView('cakes')}>Desszertek</li>
+              <li className="navbar_item" onClick={() => this.changeView('drinks')}>Üdítők</li>
+            </ul>
+          </div>
+          <div className="white_row"></div>
         </div>
         {"main" === this.state.view ? (
           <div className="main">
@@ -482,13 +504,28 @@ export default class App extends Component {
                           {undefined === value.extras ? (
                             <td className="table-cell left">-</td>
                           ) : (
-                            <td className="small">{value.extras.map((item) => (<p>{0 === item.length ? '-' : item.join(', ')}</p>))}</td>
+                            <td className="small">
+                              {value.extras.map((item, index) => (
+                                <div>
+                                {0 === item.length ? '-' : item.join(', ')}
+                                <button className="remove_item" onClick={() => this.removeFromCartWithExtras(index, key, value.price, value.extras)}>x</button>
+                                </div>)
+                              )}
+                            </td>
                           )}
-                          <td className="table-cell right">
-                            <button className="modify_amount" onClick={() => this.removeFromCart(key, value.price)}>-</button>
-                            {value.amount}
-                            {/* <button className="modify_amount" onClick={() => this.addToCart(key, value.price)}>+</button> */}
-                            <button className="modify_amount" onClick={() => this.showModalAndSetState(key, value.price, value.extras_keys)}>+</button>
+                          <td className="table-cell right wide">
+                          {undefined === value.extras ? (
+                            <div>
+                              <button className="modify_amount" onClick={() => this.removeFromCart(key, value.price)}>-</button>
+                              {value.amount}
+                              <button className="modify_amount" onClick={() => this.addToCart(key, value.price)}>+</button>
+                            </div>
+                          ) : (
+                            <div>
+                              {value.amount}
+                              <button className="modify_amount" onClick={() => this.showModalAndSetState(key, value.price, value.extras_keys)}>+</button>
+                            </div>
+                          )}
                           </td>
                           <td className="table-cell right">{value.price.toFixed(2)} €</td>
                         </tr>
