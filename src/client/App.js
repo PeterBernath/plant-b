@@ -81,7 +81,7 @@ export default class App extends Component {
 
   logout = () => {
     sessionStorage.removeItem('jwtToken');
-    this.setState({ loggedIn: false });
+    this.setState({ loggedIn: false, view: 'main' });
   };
 
   handleRegistration = (event) => {
@@ -116,23 +116,46 @@ export default class App extends Component {
   handleLogin = (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
-    fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: data.get('username'), password: data.get('password') }),
+    const username = data.get('username')
+    const password = data.get('password')
+    if ('admin' == username && 'admin' == password) {
+      this.getAllOrders();
+    } else {
+      fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+        .then(res => res.json())
+        .then((res) => {
+          if (true === res.success) {
+            console.log(res);
+            sessionStorage.setItem('jwtToken', res.token);
+            sessionStorage.setItem('username', data.get('username'));
+            this.setState({ view: 'main', loggedIn: true, username: data.get('username')});
+          } else {
+            Swal.fire({text: 'Helytelen felhasználónév vagy jelszó', icon:'error'})
+          }
+      });
+    }
+  };
+
+  getAllOrders = () => {
+    fetch('/api/orders', {
+      method: 'GET',
     })
       .then(res => res.json())
       .then((res) => {
         if (true === res.success) {
-          console.log(res);
-          sessionStorage.setItem('jwtToken', res.token);
-          sessionStorage.setItem('username', data.get('username'));
-          this.setState({ view: 'main', loggedIn: true, username: data.get('username')});
+          console.log('orders', res.data);
+          sessionStorage.setItem('orders', res.data);
+          this.setState({ orders: res.data, view: 'admin', loggedIn: true, username: 'admin'});
         } else {
-          Swal.fire({text: 'Helytelen felhasználónév vagy jelszó', icon:'error'})
+          Swal.fire({text: 'Hiba :D', icon:'error'})
+          return Promise.reject();
         }
-      });
-  };
+    });
+  }
 
   handleLoginAfterReg = (username, password) => {
     fetch('/api/login', {
@@ -339,6 +362,18 @@ export default class App extends Component {
           </div>
           <div className="white_row"></div>
         </div>
+        {"admin" === this.state.view ? (
+        <div>
+          <div className="orders">
+            <br/><br/>
+            <ul>
+            {Object.entries(this.state.orders).map(([key, value]) => (
+              <li>{value.order_date}<br/>{value.cart}<br/><br/></li>
+            ))}
+            </ul>
+          </div>
+          <FooterReg/>
+        </div>) : (<div></div>)}
         {"main" === this.state.view ? (
           <div className="main">
             <div className="intro_background_container">
@@ -572,7 +607,7 @@ export default class App extends Component {
               </div>
               )}
               </div>
-              <Footer />
+              <FooterReg />
             </div>) : (<div></div>)}
       </div>
     );

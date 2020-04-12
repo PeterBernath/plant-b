@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize')
+const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User } = require('./models/User');
@@ -31,11 +33,6 @@ const newOrder = (req, res) => {
   let { username, date, cart } = req.body;
   cart = JSON.stringify(cart);
   date = new Date(date);
-  console.log('*******************************************************');
-  console.log('req.body', req.body);
-  console.log(cart);
-  console.log(cart.length);
-  console.log('*******************************************************');
   sequelize.sync()
     .then(() => Order.create({
       username,
@@ -53,10 +50,6 @@ const newOrder = (req, res) => {
 };
 
 const login = (req, res) => {
-  const used = process.memoryUsage();
-  for (const key in used) {
-    console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
-  }
   const { username, password } = req.body;
   User.findOne({ where: { username } }).then((result) => {
     return { dbUsername: result.dataValues.username, dbPassword: result.dataValues.password };
@@ -90,8 +83,32 @@ const login = (req, res) => {
     });
 };
 
+const getAllOrders = (req, res) => {
+  Order.findAll({
+    where: {
+      order_date: {
+        [Op.gt]: moment().toDate() 
+      }
+    }, 
+    order: [
+      ['order_date', 'ASC']
+    ] 
+  })
+    .then((result) => {
+      return result;
+    })
+    .then((data) => {
+      res.json({
+        success: true,
+        message: 'Orders supplied',
+        data
+      });
+    });
+};
+
 module.exports = {
   registerUser,
   login,
-  newOrder
+  newOrder,
+  getAllOrders,
 };

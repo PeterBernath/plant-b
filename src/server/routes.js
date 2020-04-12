@@ -9,4 +9,6 @@ router.post('/login', middlewares.login);
 
 router.post('/new-order', middlewares.newOrder);
 
+router.get('/orders', middlewares.getAllOrders);
+
 module.exports = router;
