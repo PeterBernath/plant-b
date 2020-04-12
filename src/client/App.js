@@ -385,8 +385,8 @@ export default class App extends Component {
           {"breakfast" === this.state.view ? (
             <div>
               <div className="food_category_header_container breakfast_bg">
-                <div className="food_category_header_inner_container" >
-                  <div className="food_category_header_img_container" >
+                <div className="food_category_header_inner_container">
+                  <div className="food_category_header_img_container basic_w">
                       <img className="food_category_header_img" src={breakfast}/>
                   </div>
                   <div className="food_category_header_text_container">
@@ -408,8 +408,8 @@ export default class App extends Component {
           {"lunch" === this.state.view ? (
             <div>
             <div className="food_category_header_container lunch_bg">
-              <div className="food_category_header_inner_container" >
-                <div className="food_category_header_img_container" >
+              <div className="food_category_header_inner_container">
+                <div className="food_category_header_img_container basic_w">
                     <img className="food_category_header_img" src={taco}/>
                 </div>
                 <div className="food_category_header_text_container">
@@ -431,11 +431,11 @@ export default class App extends Component {
           {"cakes" === this.state.view ? (
             <div>
             <div className="food_category_header_container cakes_bg">
-              <div className="food_category_header_inner_container" >
-                <div className="food_category_header_img_container" >
+              <div className="food_category_header_inner_container">
+                <div className="food_category_header_img_container cake_w">
                     <img className="food_category_header_img" src={cake}/>
                 </div>
-                <div className="food_category_header_text_container">
+                <div className="food_category_header_text_container margin_l">
                   <div className="food_category_header_header cakes_text">Desszertek</div>
                   <div className="food_category_header_text cakes_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua. </div>
@@ -454,12 +454,12 @@ export default class App extends Component {
           {"drinks" === this.state.view ? (
             <div>
             <div className="food_category_header_container drinks_bg">
-              <div className="food_category_header_inner_container" >
-                <div className="food_category_header_img_container" >
+              <div className="food_category_header_inner_container">
+                <div className="food_category_header_img_container drink_w">
                     <img className="food_category_header_img" src={smoothie}/>
                 </div>
                 <div className="food_category_header_text_container">
-                  <div className="food_category_header_header drinks_text">Üdítők</div>
+                  <div className="food_category_header_header drinks_text margin_l_d">Üdítők</div>
                   <div className="food_category_header_text drinks_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua. </div>
                 </div>

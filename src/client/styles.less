@@ -520,6 +520,10 @@ img {
 }
 
 .food_category_header_text_container {
+  @media (max-width: 480px) {
+    margin-top: 1vw;
+    margin-left: 1.5vw;
+  }
   overflow-wrap: break-word;
   width: 20vw;
   white-space: normal;
@@ -530,14 +534,48 @@ img {
   margin-left: 5.5vw;
 }
 
+.margin_l {
+  @media (max-width: 480px) {
+    margin-left: 0.5vw;
+  }
+}
+
+.margin_l_d {
+  @media (max-width: 480px) {
+    margin-left: 6.5vw;
+  }
+}
+
 .food_category_header_img_container {
-  @media (max-width: 375px) {
-    margin-right: 6vw;
+  @media (max-width: 480px) {
+    margin-right: 4vw;
+    padding-top: 2vw;
   }
   float: right;
-  width: calc(130px + 11vw);
   padding-top: 3.8vw;
   padding-right: 2vw;
+}
+
+.basic_w {
+  width: calc(130px + 11vw);
+}
+
+.cake_w {
+  @media (max-width: 480px) {
+    width: calc(100px + 11vw);
+    padding-top: 4vw;
+  }
+  width: calc(130px + 11vw);
+}
+
+
+.drink_w {
+  @media (max-width: 480px) {
+    width: calc(100px + 11vw);
+    padding-top: 5vw;
+    margin-right: 5vw;
+  }
+  width: calc(130px + 11vw);
 }
 
 .food_category_header_inner_container {
