@@ -12,6 +12,8 @@ import smoothie from '../../public/smoothie.png';
 import introBackground from '../../public/intro_background.png';
 import FoodCategory from '../components/food-category';
 import Modal from '../components/modal'
+import Footer from '../components/footer';
+import FooterReg from '../components/footer-reg';
 import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
 import Swal from 'sweetalert2';
@@ -357,8 +359,9 @@ export default class App extends Component {
               </div>
               <button className="login_button">Belépés</button>
             </form>
-            <a className="register_link" onClick={this.register}>Új felhasználó létrehozása</a>
+            <div className="register_link"><a className="register_link_text" onClick={this.register}>Új felhasználó létrehozása</a></div>
           </div>
+          <FooterReg />
           </div>) : (<div></div>)}
         {"register" === this.state.view ? (
           <div>
@@ -381,6 +384,7 @@ export default class App extends Component {
                 <button className="register_button">Adatok küldése</button>
               </form>
             </div>
+            <FooterReg />
           </div>) : (<div></div>)}
           {"breakfast" === this.state.view ? (
             <div>
@@ -402,7 +406,8 @@ export default class App extends Component {
                   addToCartFunc={this.addToCart}
                   addToCartWithExtrasFunc={this.addToCartWithExtras}
                   categoryId={1}
-                />
+              />
+              <Footer />
             </div>) : (<div></div>)
           }
           {"lunch" === this.state.view ? (
@@ -426,6 +431,7 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={2}
               />
+              <Footer />
            </div>) : (<div></div>)
           }
           {"cakes" === this.state.view ? (
@@ -449,6 +455,7 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={3}
               />
+              <Footer />
             </div>) : (<div></div>)
           }
           {"drinks" === this.state.view ? (
@@ -472,6 +479,7 @@ export default class App extends Component {
                 addToCartWithExtrasFunc={this.addToCartWithExtras}
                 categoryId={4}
               />
+              <Footer />
             </div>) : (<div></div>)
           }
           {"cart" === this.state.view ? (
@@ -564,6 +572,7 @@ export default class App extends Component {
               </div>
               )}
               </div>
+              <Footer />
             </div>) : (<div></div>)}
       </div>
     );

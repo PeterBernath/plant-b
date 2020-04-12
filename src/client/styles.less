@@ -48,7 +48,7 @@ img {
 }
 
 .navbar {
-  @media (max-width: 400px) {
+  @media (max-width: 480px) {
     width: 100vw;
     margin: 15px auto;
     font-size: 12px;
@@ -61,8 +61,13 @@ img {
 }
 
 .navbar_item {
+  @media (max-width: 480px) {
+    margin: 6.3vw;
+    width: 25wv;
+  }
   @media (max-width: 400px) {
-    margin: 5vw;
+    margin: 5.6vw;
+    width: 25wv;
   }
   margin: 20px;
   cursor: pointer;
@@ -87,13 +92,10 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  //-webkit-box-shadow: 10px 10px 12px -11px rgba(0,0,0,0.75);
-  //-moz-box-shadow: 10px 10px 12px -11px rgba(0,0,0,0.75);
-  //box-shadow: 10px 10px 12px -11px rgba(0,0,0,0.75);
 }
 
 .login_header {
-  width: 120px;
+  width: 100px;
   font-family: 'Libre Franklin';
   font-weight: 800;
   margin: 40px auto;
@@ -309,8 +311,11 @@ img {
 }
 
 .input-style {
+  @media (max-width: 480px) {
+    width: 100%;
+  }
   height: 41px;
-  width: 90%;
+  width: 100%;
   margin-bottom: 22px;
   border: 1px solid #a3a3a3;
   color: #5e5e5e;
@@ -320,7 +325,7 @@ img {
 
 .reg_input_style {
   height: 41px;
-  width: 98%;
+  width: 100%;
   margin-bottom: 15px;
   border: 1px solid #a3a3a3;
   color: #5e5e5e;
@@ -329,19 +334,25 @@ img {
 }
 
 .login_form {
+  @media (max-width: 480px) {
+    width: 260px;
+  }
   margin: 0px auto;
   width: 280px;
   height: 100px;
 }
 
 .register_form {
+  @media (max-width: 480px) {
+    width: 280px;
+  }
   margin: 0px auto;
   width: 400px;
   height: 100px;
 }
 
 .login_button {
-  width: 93%;
+  width: 100%;
   height: 45px;
   background-color: #ff424e;
   border: none;
@@ -381,7 +392,11 @@ img {
 }
 
 .register_link {
-  margin: 20px 0px 0px 50px;
+  margin: 15px auto 0 auto;
+  width: 158px;
+}
+
+.register_link_text {
   font-family: 'Libre Franklin';
   color: #7c7c7c;
   font-size: 13px;
@@ -976,4 +991,32 @@ input {
 .modal_header {
   padding: 15px 0 0 15px;
   font-size: 18px;
+}
+
+.footer {
+  height: 40px;
+  background-color: rgb(54, 54, 54);
+  color: white;
+  font-size: 14px;
+  margin-top: 30px;
+}
+
+.footer_reg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background-color: rgb(54, 54, 54);
+  color: white;
+  font-size: 14px;
+  margin-top: 30px;
+}
+
+.logo_img_footer {
+  float: right;
+  margin: 10px 15px 0 0;
+}
+
+.copy {
+  margin: 0 3px 0 0;
 }
