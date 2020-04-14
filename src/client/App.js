@@ -303,7 +303,7 @@ export default class App extends Component {
 
   handleTime = time => {
     this.setState({
-      hours: time._d.getHours() + (Math.abs(time._d.getTimezoneOffset()) / 60),
+      hours: time._d.getHours(),
       minutes: time._d.getMinutes()
     });
   };
@@ -366,14 +366,23 @@ export default class App extends Component {
         {"admin" === this.state.view ? (
         <div>
           <div className="orders">
+          <br/>
+          <span className="cart_heading medium">Megrendelések</span>
             <br/><br/>
             <ul>
             {Object.entries(this.state.orders).map(([key, value]) => (
-              <li>{value.order_date}<br/>{value.cart}<br/><br/></li>
+              <li>{`Felhasználónév: ${value.username} | Időpont: ${moment(value.order_date).format('YYYY/MM/DD HH:mm')}`}<br/>
+                <ul>
+                {Object.entries(JSON.parse(value.cart)).map(([key, value]) => (
+                  <li>{`${value.amount} ${key} (${undefined !== value.extras ? value.extras.join('|') : '-'})`}</li>
+                  ))}
+                </ul>
+                <br/>
+                <br/>
+              </li>
             ))}
             </ul>
           </div>
-          <FooterReg/>
         </div>) : (<div></div>)}
         {"main" === this.state.view ? (
           <div className="main">
@@ -608,7 +617,7 @@ export default class App extends Component {
               </div>
               )}
               </div>
-            <FooterCart />
+            {/* <FooterCart /> */}
             </div>) : (<div></div>)}
       </div>
     );
