@@ -323,7 +323,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main_main">
         <Modal
           item={this.state.item}
           handlerFunc={this.addToCartWithExtras}
