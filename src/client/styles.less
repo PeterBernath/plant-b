@@ -28,7 +28,6 @@ img {
 }
 
 .main_main {
-  position: relative;
   overflow-x: hidden;
 }
 
@@ -90,7 +89,7 @@ img {
 .intro_background_container {
   position: absolute;
   width: 100%;
-  height: 82%;
+  height: 80.8%;
 }
 
 .intro_background {
@@ -338,13 +337,17 @@ img {
   padding-left: 7px;
 }
 
+.login_page {
+  min-height: 500px;
+}
+
 .login_form {
   @media (max-width: 480px) {
     width: 260px;
   }
   margin: 0px auto;
   width: 280px;
-  height: 100px;
+  height: 100%;
 }
 
 .register_form {
@@ -842,6 +845,9 @@ input {
 }
 
 .delivery_time {
+  @media (max-width:480px) {
+    height: 100px;
+  }
   width: 400px;
   height: 120px;
   display: inline-block;
@@ -858,7 +864,7 @@ input {
     display: inline-block;
   }
   width: 250px;
-  height: 200px;
+  height: 100px;
 }
 
 .cart-body {
@@ -867,6 +873,9 @@ input {
   width: 100%;
 
   .cart_table_container{
+    @media (max-width:480px) {
+      min-height: 10vw;
+    }
     min-height: 250px;
     display: block;
     overflow: auto;
@@ -1015,6 +1024,19 @@ input {
   color: white;
   font-size: 14px;
   margin-top: 30px;
+}
+
+.footer_cart {
+  @media (max-width: 480px) {
+    display: none;
+  }
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background-color: rgb(54, 54, 54);
+  color: white;
+  font-size: 14px;
 }
 
 .logo_img_footer {

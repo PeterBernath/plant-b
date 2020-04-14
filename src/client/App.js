@@ -14,6 +14,7 @@ import FoodCategory from '../components/food-category';
 import Modal from '../components/modal'
 import Footer from '../components/footer';
 import FooterReg from '../components/footer-reg';
+import FooterCart from '../components/footer-cart';
 import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
 import Swal from 'sweetalert2';
@@ -381,7 +382,7 @@ export default class App extends Component {
             </div>
           </div>) : (<div></div>)}
         {"login" === this.state.view ? (
-          <div>
+          <div className="login_page">
             <div className="delimiter"></div>
             <div className="login_header">Belépés</div>
             <div className="login_form">
@@ -399,7 +400,7 @@ export default class App extends Component {
           <FooterReg />
           </div>) : (<div></div>)}
         {"register" === this.state.view ? (
-          <div>
+          <div className="login_page">
             <div className="delimiter"></div>
             <div className="register_header">Regisztráció</div>
             <div className="register_form">
@@ -607,7 +608,7 @@ export default class App extends Component {
               </div>
               )}
               </div>
-              <FooterReg />
+            <FooterCart />
             </div>) : (<div></div>)}
       </div>
     );
