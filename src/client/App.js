@@ -18,12 +18,27 @@ import FooterCart from '../components/footer-cart';
 import items from '../data/fixtures';
 import { styled } from '@material-ui/styles';
 import Swal from 'sweetalert2';
+import * as queryString from 'query-string';
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 import { DatePicker, TimePicker } from 'antd';
 import "antd/dist/antd.css";
 
 const format = 'HH:mm';
+const stringifiedParams = queryString.stringify({
+  client_id: '281477829523537',
+  redirect_uri: 'http://localhost:3000/',
+  scope: ['email'].join(','),
+  response_type: 'code',
+  auth_type: 'rerequest',
+  display: 'popup',
+});
+
+const facebookLoginUrl = `https://www.facebook.com/v4.0/dialog/oauth?${stringifiedParams}`;
+
+const urlParams = queryString.parse(window.location.search);
+
+console.log(`The code is: ${urlParams.code}`);
 
 const MyPerson = styled(PersonPin)({
   color: 'black',
@@ -58,6 +73,21 @@ export default class App extends Component {
     if (token) {
       this.setState({ loggedIn: true });
     }
+    if (undefined !== urlParams.code) {
+      this.getAccessToken()
+    }
+  }
+
+  getAccessToken = async () => {
+    console.log(urlParams.code);
+    const response = await fetch('/api/fb-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({code: urlParams.code}),
+    })
+    const responseJSON = await response.json();
+    console.log(responseJSON);
+    this.setState({ view: 'main', loggedIn: true, username: responseJSON.username });
   }
 
   hello = () => {
@@ -404,6 +434,7 @@ export default class App extends Component {
               </div>
               <button className="login_button">Belépés</button>
             </form>
+            <a href={facebookLoginUrl}>Login with Facebook</a>
             <div className="register_link"><a className="register_link_text" onClick={this.register}>Új felhasználó létrehozása</a></div>
           </div>
           <FooterReg />

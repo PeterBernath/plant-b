@@ -11,4 +11,6 @@ router.post('/new-order', middlewares.newOrder);
 
 router.get('/orders', middlewares.getAllOrders);
 
+router.post('/fb-login', middlewares.getAccessToken);
+
 module.exports = router;

@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize')
 const moment = require('moment');
+const fetch = require("node-fetch");
+const axios = require('axios').default;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User } = require('./models/User');
@@ -106,9 +108,58 @@ const getAllOrders = (req, res) => {
     });
 };
 
+const getAccessToken = async (req, res) => {
+  const { code } = req.body;
+  const fbData = await axios({
+    url: 'https://graph.facebook.com/v4.0/oauth/access_token',
+    method: 'get',
+    params: {
+      client_id: '281477829523537',
+      client_secret: 'e60ed5f37d8ceff10fc5e3124a32a84e',
+      redirect_uri: 'http://localhost:3000/',
+      code,
+    },
+  });
+  const userData = await getFacebookUserData(fbData.data.access_token);
+  console.log('data', userData);
+  const { first_name, last_name } = userData;
+  const username = userData.email;
+  await sequelize.sync()
+  await User.findOrCreate(
+    {where: {
+      username
+    }, 
+    defaults: {
+      first_name,
+      last_name,
+      password: 'fb_login'
+    }
+  })
+  res.json({
+    success: true,
+    message: 'Sikeres bejelentkezes',
+    username
+  });
+};
+
+
+const getFacebookUserData = async (access_token) => {
+  const { data } = await axios({
+    url: 'https://graph.facebook.com/me',
+    method: 'get',
+    params: {
+      fields: ['id', 'email', 'first_name', 'last_name'].join(','),
+      access_token,
+    },
+  });
+  console.log(data);
+  return data;
+};
+
 module.exports = {
   registerUser,
   login,
   newOrder,
   getAllOrders,
+  getAccessToken,
 };
